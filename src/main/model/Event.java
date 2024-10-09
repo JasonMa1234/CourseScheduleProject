@@ -1,7 +1,7 @@
 package model;
 
 //Represents a Event user added
-public class Event {
+public class Event implements Case{
     private String description;
 
     //REQUIRES: description cannot be null
