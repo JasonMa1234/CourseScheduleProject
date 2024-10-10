@@ -7,10 +7,19 @@ public class Event implements Case{
     private int timeHoursOver;
     private int timeMinutesOver;
     private String description;
+    private static int credit = 0;
 
     //REQUIRES: description cannot be null
     //EFFECTS: add a description descripts the event
-    public void Events(String description){
+    public void Events(int timeHoursBegin,
+    int timeMinutesBegin,
+    int timeHoursOver,
+    int timeMinutesOver,
+    String description){
+        this.timeHoursBegin = 0;
+        this.timeMinutesBegin = 0;
+        this.timeHoursOver = 0;
+        this.timeMinutesOver = 0;
         this.description = ""; // stub
     }
 
