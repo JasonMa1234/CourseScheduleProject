@@ -21,4 +21,9 @@ public class ListOfDate {
     public void addDate(String date){
         dateList.add(date);
     }
+
+    //EFFECTS: return the size of the dateList
+    public int sizeDate(){
+        return dateList.size();
+    }
 }
