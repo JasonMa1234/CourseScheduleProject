@@ -11,7 +11,7 @@ public class Event implements Case{
 
     //REQUIRES: description cannot be null
     //EFFECTS: add a description descripts the event
-    public void Events(int timeHoursBegin,
+    public Event(int timeHoursBegin,
     int timeMinutesBegin,
     int timeHoursOver,
     int timeMinutesOver,

@@ -20,7 +20,7 @@ public class ListOfCourses implements Cases{
 
     //EFFECTS: return the total credit in the course list
     @Override
-    public int Calculate(){
+    public int calculate(){
         int totalCredit = 0;
         for(Course c : CourseList){
             totalCredit += c.getCredit();

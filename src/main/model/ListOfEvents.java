@@ -14,12 +14,12 @@ public class ListOfEvents implements Cases{
     //REQUIRES: event input cannot be null
     //MODIFIES: this
     //EFFECTS: add a event into the Event list
-    private void addEvent(Event event){
+    public void addEvent(Event event){
         EventList.add(event);
     }
 
     @Override
-    public int Calculate(){
+    public int calculate(){
         int count = 0;
         for (Event e : EventList){
             count++;

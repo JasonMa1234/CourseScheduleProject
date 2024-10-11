@@ -1,4 +1,5 @@
 package model;
+import java.util.ArrayList;
 
 //Represents a course user enrolled
 public class Course implements Case{
@@ -10,9 +11,10 @@ public class Course implements Case{
     private String type;
     private String professor;
     private String courseDescription;
-    private String date;
+    private ListOfDate date;
     private String term;
     private int credit;
+    private static ListOfDate DATE = new ListOfDate();
 
     //REQUIRES: courseName, courseDescription cannot be null
     //EFFECTS: create a Course with the name of courseName and details of courseDescription
@@ -24,20 +26,20 @@ public class Course implements Case{
     String type, 
     String professor, 
     String courseDescription, 
-    String date, 
+    ListOfDate date, 
     String term, 
     int credit){
-        this.courseName = ""; //stub
-        this.courseDescription = "";
-        this.timeHoursBegin = 0;
-        this.timeMinutesBegin = 0;
-        this.timeHoursOver = 0;
-        this.timeMinutesOver = 0;
-        this.credit = 0;
-        this.date = "";
-        this.professor = "";
-        this.term = "";
-        this.type = "";
+        this.courseName = courseName; //stub
+        this.courseDescription = courseDescription;
+        this.timeHoursBegin = timeHoursBegin;
+        this.timeMinutesBegin = timeMinutesBegin;
+        this.timeHoursOver = timeHoursOver;
+        this.timeMinutesOver = timeMinutesOver;
+        this.credit = credit;
+        this.date = DATE;
+        this.professor = professor;
+        this.term = term;
+        this.type = type;
     }
 
     //REQUIRES: name must not be null
@@ -86,7 +88,7 @@ public class Course implements Case{
     //          String from "Mon, Tue, Wed, Thu, Fri"
     //MODIFIES: this
     //EFFECTS: define the course's date
-    private void setDate(String date){
+    private void setDate(ListOfDate date){
         this.date = date;
     }
     
@@ -146,7 +148,7 @@ public class Course implements Case{
     }
 
     //EFFECTS: return the course date
-    private String getDate(){
+    private ListOfDate getDate(){
         return date;
     }
 
