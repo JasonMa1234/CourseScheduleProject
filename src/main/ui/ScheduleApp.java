@@ -2,6 +2,7 @@ package ui;
 import model.*;
 import java.util.Scanner;
 
+//Schedule application
 public class ScheduleApp {
     private ListOfEvents eventList;
     private ListOfCourses courseList;
@@ -22,7 +23,8 @@ public class ScheduleApp {
     monWedFri, 
     "Winter1", 
     3);
-
+    
+    //EFFECTS: run the schedule application
     public ScheduleApp(){
         monWedFri.addDate("Mon");
         monWedFri.addDate("Wed");
@@ -32,7 +34,8 @@ public class ScheduleApp {
 
         runSchedule();
     }
-
+    //MODIFIES: this
+    //EFFECTS: create eventlist and courselist, and run the mode selection method
     private void runSchedule(){
         eventList = new ListOfEvents();
         courseList = new ListOfCourses();
@@ -40,6 +43,8 @@ public class ScheduleApp {
         System.out.println("successfully created the course list!");
     }
 
+    //MODIFIES: this
+    //EFFECTS: accept the type user want to insert into list
     private void init() {
         String command = null;
         displayChooseMod();
@@ -65,6 +70,7 @@ public class ScheduleApp {
         System.out.println("Which list would you create? Course or Event?\n");
     }
 
+    //EFFECTS: create the course based on user's requirement
     private Course createCourse(){
         String courseName;
         int timeHoursBegin; 
@@ -110,6 +116,10 @@ public class ScheduleApp {
         credit);
         return course;
     }
+
+    //REQUIRES: continueInput must be a boolean and not null
+    //MODIFIES: continueInput
+    //EFFECTS: let user decide whther continue inserting course or event
     private Boolean ifCountinue(Boolean continueInput){
         System.out.println("continue?\n");
         continueInput = Boolean.parseBoolean(input.next());

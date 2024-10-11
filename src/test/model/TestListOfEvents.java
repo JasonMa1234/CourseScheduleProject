@@ -16,13 +16,15 @@ public class TestListOfEvents {
 
     @BeforeEach
     void runBefore() {
-        officeHour = new Event(3,
+        officeHour = new Event("officehour",
+        3,
         0,
         5,
         0,
         "Tue",
         "OfficeHoure");
-        clubActivity = new Event(10, 
+        clubActivity = new Event("clubactivity",
+        10, 
         0, 
         11, 
         0,

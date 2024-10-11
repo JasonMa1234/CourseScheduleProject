@@ -2,6 +2,7 @@ package model;
 
 //Represents a Event user added
 public class Event implements Case{
+    private String eventName;
     private int timeHoursBegin;
     private int timeMinutesBegin;
     private int timeHoursOver;
@@ -13,12 +14,14 @@ public class Event implements Case{
 
     //REQUIRES: description cannot be null
     //EFFECTS: add a description descripts the event
-    public Event(int timeHoursBegin,
+    public Event(String eventName,
+    int timeHoursBegin,
     int timeMinutesBegin,
     int timeHoursOver,
     int timeMinutesOver,
     String date,
     String description){
+        this.eventName = eventName;
         this.timeHoursBegin = timeHoursBegin;
         this.timeMinutesBegin = timeMinutesBegin;
         this.timeHoursOver = timeHoursOver;
@@ -34,6 +37,13 @@ public class Event implements Case{
     private void setTimeBegin(int hours,int minutes){
         timeHoursBegin = hours;
         timeMinutesBegin = minutes;
+    }
+
+    //REQUIRES: newName must not be null
+    //MODIFIES: this
+    //EFFECTS: set the event's name
+    private void setEventName(String newName){
+        eventName = newName;
     }
 
     //REQUIRES: hours must between 0-24, minutes must between 0-60
@@ -63,28 +73,39 @@ public class Event implements Case{
     public void setDate(String date){
         this.date = date;
     }
+
+    //EFFECTS: return the event's name
+    public String getEventName(){
+        return eventName;
+    }
+
+    //EFFECTS: return the event's date
+    public String getEventDate(){
+        return date;
+    }
+
     //EFFECTS: return the event's begin time in hour
-    private int getTimeBeginHours(){
+    public int getTimeBeginHours(){
         return timeHoursBegin;
     }
 
     //EFFECTS: return the event's begin time in minute
-    private int getTimeBeginMinutes(){
+    public int getTimeBeginMinutes(){
         return timeMinutesBegin;
     }
 
     //EFFECTS: return the event's over time in hour
-    private int getTimeOverHours(){
+    public int getTimeOverHours(){
         return timeHoursOver;
     }
 
     //EFFECTS: return the event's over time in minutes
-    private int getTimeOverMinutes(){
+    public int getTimeOverMinutes(){
         return timeMinutesOver;
     }
 
     //EFFECTS: return additional description to the event
-    private String getDescription(){
+    public String getDescription(){
         return description;
     }
 

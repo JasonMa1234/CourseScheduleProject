@@ -106,54 +106,54 @@ public class Course implements Case{
     }
 
     //EFFECTS: return the course name
-    private String getCourseName(){
+    public String getCourseName(){
         return courseName;
     }
 
     //EFFECTS: return the course's begin time in hour
-    private int getTimeBeginHours(){
+    public int getTimeBeginHours(){
         return timeHoursBegin;
     }
 
     //EFFECTS: return the course's begin time in minute
-    private int getTimeBeginMinutes(){
+    public int getTimeBeginMinutes(){
         return timeMinutesBegin;
     }
 
     //EFFECTS: return the course's over time in hour
-    private int getTimeOverHours(){
+    public int getTimeOverHours(){
         return timeHoursOver;
     }
 
     //EFFECTS: return the course's over time in minutes
-    private int getTimeOverMinutes(){
+    public int getTimeOverMinutes(){
         return timeMinutesOver;
     }
 
     //EFFECTS: return the course type
-    private String getType(){
+    public String getType(){
         return type;
     }
 
 
     //EFFECTS: return the professor's name
-    private String getProfessor(String pro){
+    public String getProfessor(){
         return professor;
     }
 
 
     //EFFECTS: return additional description to the course
-    private String getDescription(String desc){
+    public String getDescription(){
         return courseDescription;
     }
 
     //EFFECTS: return the course date
-    private ListOfDate getDate(){
+    public ListOfDate getDate(){
         return date;
     }
 
     //EFFECTS: return the term
-    private String getTerm(){
+    public String getTerm(){
         return term;
     }
 
