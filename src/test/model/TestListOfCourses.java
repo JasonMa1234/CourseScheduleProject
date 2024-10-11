@@ -3,6 +3,8 @@ package model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,6 +53,14 @@ public class TestListOfCourses {
         courseList2 = new ListOfCourses();
         courseList2.addCourse(stat);
         courseList2.addCourse(math);
+    }
+
+    @Test 
+    void testConstructor(){
+        ArrayList<Course> listOfCourse1 = courseList1.getList();
+        assertEquals(0,listOfCourse1.size());
+        ArrayList<Course> listOfCourse2 = courseList2.getList();
+        assertEquals(2,listOfCourse2.size());
     }
 
     @Test

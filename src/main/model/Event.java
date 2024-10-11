@@ -7,7 +7,9 @@ public class Event implements Case{
     private int timeHoursOver;
     private int timeMinutesOver;
     private String description;
+    private String date;
     private static int credit = 0;
+    private boolean isImportant;
 
     //REQUIRES: description cannot be null
     //EFFECTS: add a description descripts the event
@@ -15,12 +17,15 @@ public class Event implements Case{
     int timeMinutesBegin,
     int timeHoursOver,
     int timeMinutesOver,
+    String date,
     String description){
-        this.timeHoursBegin = 0;
-        this.timeMinutesBegin = 0;
-        this.timeHoursOver = 0;
-        this.timeMinutesOver = 0;
-        this.description = ""; // stub
+        this.timeHoursBegin = timeHoursBegin;
+        this.timeMinutesBegin = timeMinutesBegin;
+        this.timeHoursOver = timeHoursOver;
+        this.timeMinutesOver = timeMinutesOver;
+        this.description = description;
+        this.date = date;
+        this.isImportant = false; // stub
     }
 
     //REQUIRES: hours must between 0-24, minutes must between 0-60
@@ -45,6 +50,19 @@ public class Event implements Case{
         description = desc;
     }
 
+    //REQUIRES: isImportant cannot be null
+    //MODIFIES: this
+    //EFFECTS: set the event to be important case or not
+    public void setIsImportant(Boolean isImportant){
+        this.isImportant = isImportant;
+    }
+
+    //REQUIRES: date must be one of week days
+    //MODIFIES: this
+    //EFFECTS: set the date of the event happens
+    public void setDate(String date){
+        this.date = date;
+    }
     //EFFECTS: return the event's begin time in hour
     private int getTimeBeginHours(){
         return timeHoursBegin;
@@ -66,7 +84,12 @@ public class Event implements Case{
     }
 
     //EFFECTS: return additional description to the event
-    private String getDescription(String desc){
+    private String getDescription(){
         return description;
+    }
+
+    //EFFECTS: return whether te event is important
+    public boolean getIsImportant(){
+        return isImportant;
     }
 }
