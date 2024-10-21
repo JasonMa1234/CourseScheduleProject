@@ -8,7 +8,7 @@ public class ListOfEvents extends ListOfCase{
 
     //EFFECTS: create a null event list
     public ListOfEvents(){
-        this.eventList = new ArrayList<>(); //stub
+        this.eventList = new ArrayList<Event>(); //stub
     }
 
     // //REQUIRES: event input cannot be null

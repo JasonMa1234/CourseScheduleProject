@@ -130,17 +130,17 @@ public class ListOfCaseForWeek {
             ListOfDate dates = x.getDate();
             ArrayList<String> dateList = dates.getDateList();
             for (String s: dateList) {
-                if (s == "Mon") {
+                if (s.equals("Mon")) {
                     planMon(x);
-                } else if (s == "Tue") {
+                } else if (s.equals("Tue")) {
                     planTue(x);
-                } else if (s == "Wed") {
+                } else if (s.equals("Wed")) {
                     planWed(x);
-                } else if (s == "Thu") {
+                } else if (s.equals("Thu")) {
                     planThu(x);
-                } else if (s == "Fri") {
+                } else if (s.equals("Fri")) {
                     planFri(x);
-                } else if (s == "Sat") {
+                } else if (s.equals("Sat")) {
                     planSat(x);
                 } else {
                     planSun(x);

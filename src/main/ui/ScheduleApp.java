@@ -31,9 +31,11 @@ public class ScheduleApp {
     
     //EFFECTS: run the schedule application
     public ScheduleApp() {
+        courseList = new ListOfCourses();
+        eventList = new ListOfEvents();
         weekSchedule = new ListOfCaseForWeek();
         input = new Scanner(System.in);
-        boolean wantAdd = false;
+        boolean wantAdd = true;
         System.out.println("Add course or event in your schedule\n");
         while (wantAdd) {
             checkType();
@@ -45,9 +47,9 @@ public class ScheduleApp {
                 wantAdd = false;
             }
         }
-        
         weekSchedule.fillWeek(courseList);
         weekSchedule.fillWeek(eventList);
+
         // monWedFri.addDate("Mon");
         // monWedFri.addDate("Wed");
         // monWedFri.addDate("Fri");
@@ -129,7 +131,7 @@ public class ScheduleApp {
     }
 
     private String getName() {
-        System.out.println("What's the course's name?\n");
+        System.out.println("What's the name?\n");
         return input.nextLine();
     }
 
