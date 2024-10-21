@@ -9,6 +9,7 @@ public class CaseToDo {
     protected int timeMinutesOver;
     protected String description;
     protected ListOfDate date;
+    protected String place;
 
     /*REQUIRES: name cannot be null, timeHoursBegin, timeHoursOver must be integer between 0-24,
                 timeMinutesBegin, timeMinutesOver must be integer between 0-60 */
@@ -19,7 +20,8 @@ public class CaseToDo {
                     int timeHoursOver, 
                     int timeMinutesOver, 
                     String description,
-                    ListOfDate date) {
+                    ListOfDate date,
+                    String place) {
         this.name = name;
         this.timeHoursBegin = timeHoursBegin;
         this.timeMinutesBegin = timeMinutesBegin;
@@ -27,6 +29,7 @@ public class CaseToDo {
         this.timeMinutesOver = timeMinutesOver;
         this.description = description;
         this.date = date;
+        this.place = place;
     }
 
     //REQUIRES: newName must not be null
@@ -70,10 +73,18 @@ public class CaseToDo {
         description = newDesc;
     }
 
+    //REQUIRES newDate must not be null
     //MODIFIES: this
     //EFFECTS: change the date to new date
     public void setDate(ListOfDate newDate) {
         date = newDate;
+    }
+
+    //REQUIRES: newPlace must not be null
+    //MODIFIES: this
+    //EFFECTS: change the place
+    public void setPlace(String newPlace) {
+        place = newPlace;
     }
 
     //EFFECTS: return the name of the case
@@ -107,7 +118,12 @@ public class CaseToDo {
     }
 
     //EFFECTS: return the date
-    public ListOfDate getDate(){
+    public ListOfDate getDate() {
         return date;
+    }
+
+    //EFFETCS: return the place case take place
+    public String getPlace() {
+        return place;
     }
 }

@@ -20,8 +20,9 @@ public class Course extends CaseToDo {
                 String type,
                 String professor,
                 String term,
-                int credit) {
-        super(name, timeHoursBegin, timeMinutesBegin, timeHoursOver, timeMinutesOver, description, date);
+                int credit,
+                String place) {
+        super(name, timeHoursBegin, timeMinutesBegin, timeHoursOver, timeMinutesOver, description, date, place);
         this.type = type;
         this.professor = professor;
         this.term = term;

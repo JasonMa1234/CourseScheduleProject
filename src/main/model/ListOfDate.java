@@ -26,4 +26,9 @@ public class ListOfDate {
     public int sizeDate(){
         return dateList.size();
     }
+
+    //EFFECTS: return the dateList
+    public ArrayList<String> getDateList() {
+        return dateList;
+    }
 }

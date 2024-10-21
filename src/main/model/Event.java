@@ -12,8 +12,9 @@ public class Event extends CaseToDo {
             int timeHoursOver, 
             int timeMinutesOver, 
             String description,
-            ListOfDate date) {
-        super(name, timeHoursBegin, timeMinutesBegin, timeHoursOver, timeMinutesOver, description, date);
+            ListOfDate date,
+            String place) {
+        super(name, timeHoursBegin, timeMinutesBegin, timeHoursOver, timeMinutesOver, description, date, place);
         this.isImportant = false;
     }
 

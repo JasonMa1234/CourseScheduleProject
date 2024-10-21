@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 // Represents a list of events
-public class ListOfEvents implements Cases{
+public class ListOfEvents extends ListOfCase{
     private ArrayList<Event> eventList;
 
     //EFFECTS: create a null event list
@@ -11,26 +11,25 @@ public class ListOfEvents implements Cases{
         this.eventList = new ArrayList<>(); //stub
     }
 
-    //REQUIRES: event input cannot be null
-    //MODIFIES: this
-    //EFFECTS: add a event into the Event list
-    public void addEvent(Event event){
-        eventList.add(event);
-    }
+    // //REQUIRES: event input cannot be null
+    // //MODIFIES: this
+    // //EFFECTS: add a event into the Event list
+    // public void addEvent(Event event){
+    //     eventList.add(event);
+    // }
 
-    //EFFECTS: return the event list in the class
-    public ArrayList getList(){
-        return eventList;
-    }
+    // //EFFECTS: return the event list in the class
+    // public ArrayList getList(){
+    //     return eventList;
+    // }
 
-    @Override
-    public int calculate(){
+    public int calculateImportant(){
         int count = 0;
         if (eventList.size() == 0){
             return count;
         }
         for (Event e : eventList){
-            if(e.getIsImportant()){
+            if(e.getImportance()){
                 count++;
             }
         }
