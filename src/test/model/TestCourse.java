@@ -1,4 +1,5 @@
 package model;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,34 +13,38 @@ public class TestCourse {
     private static ListOfDate monWedFri;
 
     @BeforeEach
-    void runBefore(){
+    void runBefore() {
         monWedFri = new ListOfDate();
         monWedFri.addDate("Mon");
         monWedFri.addDate("Wed");
         monWedFri.addDate("Fri");
         stat = new Course("STAT", 
-        14, 
-        0, 
-        15, 
-        0, 
-        "lecture", 
-        "A", 
-        "statistic course", 
-        monWedFri, 
-        "Winter1", 
-        3);
+                        14, 
+                        0, 
+                        15, 
+                        0, 
+                        "Statistic 200 lecture",
+                        monWedFri,
+                        "lecture",
+                        "A",
+                        "Winter1",
+                        3,
+                        "ESB1024");
     }
+
     @Test
-    void testConstructor(){
-        assertEquals("STAT", stat.getCourseName());
-        assertEquals(14, stat.getTimeBeginHours());
-        assertEquals(0, stat.getTimeBeginMinutes());
-        assertEquals(15, stat.getTimeOverHours());
-        assertEquals(0, stat.getTimeOverMinutes());
+    void testConstructor() {
+        assertEquals("STAT", stat.getName());
+        assertEquals(14, stat.getTimeHoursBegin());
+        assertEquals(0, stat.getTimeMinutesBegin());
+        assertEquals(15, stat.getTimeHoursOver());
+        assertEquals(0, stat.getTimeMinutesOver());
         assertEquals("lecture", stat.getType());
         assertEquals("A", stat.getProfessor());
-        assertEquals("statistic course", stat.getDescription());
+        assertEquals("Statistic 200 lecture", stat.getDescription());
         assertEquals("Winter1", stat.getTerm());
         assertEquals(3, stat.getCredit());
+        assertEquals(monWedFri, stat.getDate());
+        assertEquals("ESB1024", stat.getPlace());
     }
 }

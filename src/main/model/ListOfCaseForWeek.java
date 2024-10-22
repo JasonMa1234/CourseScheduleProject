@@ -148,4 +148,24 @@ public class ListOfCaseForWeek {
             }
         }
     }
+
+    //REQUIRES: date must be one of "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
+    //EFFECTS: return the certain arrangement of a day with given input
+    public ArrayList<CaseToDo> getDateList(String date) {
+        if (date.equals("Mon")) {
+            return caseListMon;
+        } else if (date.equals("Tue")) {
+            return caseListTue;
+        } else if (date.equals("Wed")) {
+            return caseListWed;
+        } else if (date.equals("Thu")) {
+            return caseListThu;
+        } else if (date.equals("Fri")) {
+            return caseListFri;
+        } else if (date.equals("Sat")) {
+            return caseListSat;
+        } else {
+            return caseListSun;
+        }
+    }
 }

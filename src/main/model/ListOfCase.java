@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class ListOfCase {
-    private ArrayList<CaseToDo> caseList;
+    protected ArrayList<CaseToDo> caseList;
 
     //create an empty ListOfCase
     public ListOfCase() {

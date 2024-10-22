@@ -13,10 +13,8 @@ public class TestListOfCourses {
     private ListOfCourses courseList2;
     private static ListOfDate monWedFri;
     private static ListOfDate tueThu;
-
-
-    private static Course stat;
-    private static Course math;
+    private Course stat;
+    private Course math;
 
     @BeforeEach
     void runBefore() {
@@ -28,44 +26,46 @@ public class TestListOfCourses {
         tueThu.addDate("Tue");
         tueThu.addDate("Thu");
         stat = new Course("STAT", 
-        14, 
-        0, 
-        15, 
-        0, 
-        "lecture", 
-        "A", 
-        "statistic course", 
-        monWedFri, 
-        "Winter1", 
-        3);
+                        14, 
+                        0, 
+                        15, 
+                        0, 
+                        "Statistic 200 lecture",
+                        monWedFri,
+                        "lecture",
+                        "A",
+                        "Winter1",
+                        3,
+                        "ESB1024");
         math = new Course("MATH", 
-        11, 
-        00, 
-        12, 
-        30, 
-        "lecture", 
-        "B", 
-        "math course", 
-        tueThu, 
-        "Winter1", 
-        3);
+                        10, 
+                        0, 
+                        12, 
+                        30, 
+                        "Math 200 lecture",
+                        tueThu,
+                        "lecture",
+                        "B",
+                        "Winter1",
+                        3,
+                        "WESB101");
         courseList1 = new ListOfCourses();
         courseList2 = new ListOfCourses();
-        courseList2.addCourse(stat);
-        courseList2.addCourse(math);
+        courseList2.addCase(stat);
+        courseList2.addCase(math);
     }
 
     @Test 
     void testConstructor(){
-        ArrayList<Course> listOfCourse1 = courseList1.getList();
+        ArrayList<CaseToDo> listOfCourse1 = courseList1.getList();
         assertEquals(0,listOfCourse1.size());
-        ArrayList<Course> listOfCourse2 = courseList2.getList();
+        ArrayList<CaseToDo> listOfCourse2 = courseList2.getList();
         assertEquals(2,listOfCourse2.size());
     }
 
     @Test
-    void testCalculate() {
-        assertEquals(0,courseList1.calculate());
-        assertEquals(6,courseList2.calculate());
+    void testCalculateCredit() {
+        assertEquals(0,courseList1.calculateCredit());
+        assertEquals(6,courseList2.calculateCredit());
     }
 }
