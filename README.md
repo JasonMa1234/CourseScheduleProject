@@ -25,3 +25,6 @@ I plan to design a plug-in software for ubc's workday website for personal time 
 - I want to check my daily arrangement to see when is the office hour start
 - I want to be notified when it is time to go to the office hour
 - I want to be able to check the lecture's classroom at the start of the term
+- As a user, I want to save the list of event in this week
+- As a user, I want to save the list of course in this week
+- As a user, I want to save this week's schedule
