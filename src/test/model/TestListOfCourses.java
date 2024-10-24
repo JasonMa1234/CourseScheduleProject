@@ -56,7 +56,7 @@ public class TestListOfCourses {
     }
 
     @Test 
-    void testConstructor(){
+    void testConstructor() {
         ArrayList<CaseToDo> listOfCourse1 = courseList1.getList();
         assertEquals(0,listOfCourse1.size());
         ArrayList<CaseToDo> listOfCourse2 = courseList2.getList();

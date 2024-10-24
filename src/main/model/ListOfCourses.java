@@ -53,4 +53,6 @@ public class ListOfCourses extends ListOfCase{
         }
         return totalCredit;
     }
+
+    
 }

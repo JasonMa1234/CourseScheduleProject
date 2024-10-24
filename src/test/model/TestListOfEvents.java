@@ -48,10 +48,10 @@ public class TestListOfEvents {
 
     @Test
     void testConstructor(){
-        ArrayList<CaseToDo> ListOfEvent1 = eventList1.getList();
-        assertEquals(0,ListOfEvent1.size());
-        ArrayList<CaseToDo> ListOfEvent2 = eventList2.getList();
-        assertEquals(2, ListOfEvent2.size());
+        ArrayList<CaseToDo> listOfEvent1 = eventList1.getList();
+        assertEquals(0,listOfEvent1.size());
+        ArrayList<CaseToDo> listOfEvent2 = eventList2.getList();
+        assertEquals(2, listOfEvent2.size());
     }
 
     @Test

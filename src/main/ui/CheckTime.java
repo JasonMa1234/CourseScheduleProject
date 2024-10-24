@@ -22,12 +22,12 @@ public class CheckTime {
     private ListOfCaseForWeek weekSchedule;
 
     public CheckTime(ListOfCaseForWeek weekSchedule) {
+        this.weekSchedule = weekSchedule;
         this.currentTime = LocalTime.now();//from chatGPT
         this.minute = currentTime.getMinute();
         this.hour = currentTime.getHour();
         this.today = LocalDate.now();  
         this.dayOfWeekNum = today.getDayOfWeek().getValue();  
-        this.weekSchedule = weekSchedule;
         getWeekDay();
     }
 

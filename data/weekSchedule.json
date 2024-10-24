@@ -1,0 +1,42 @@
+{"week schedules": [
+    {"Mon Schedule": [{
+        "end minute": 0,
+        "date": "Mon",
+        "start minute": 0,
+        "end hour": 13,
+        "importance": false,
+        "name": "AA",
+        "description": "",
+        "place": "BB",
+        "start hour": 12
+    }]},
+    {"Tue Schedule": []},
+    {"Tue Schedule": []},
+    {"Tue Schedule": []},
+    {"Fri Schedule": [
+        {
+            "end minute": 0,
+            "date": "Fri",
+            "start minute": 0,
+            "end hour": 11,
+            "importance": false,
+            "name": "A",
+            "description": "",
+            "place": "B",
+            "start hour": 10
+        },
+        {
+            "end minute": 0,
+            "date": "Fri",
+            "start minute": 0,
+            "end hour": 11,
+            "importance": false,
+            "name": "AAA",
+            "description": "",
+            "place": "BBB",
+            "start hour": 10
+        }
+    ]},
+    {"Tue Schedule": []},
+    {"Tue Schedule": []}
+]}

@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 //Represents a course user enrolled
 public class Course extends CaseToDo {
     private String type;
@@ -16,7 +18,7 @@ public class Course extends CaseToDo {
                 int timeHoursOver, 
                 int timeMinutesOver, 
                 String description,
-                ListOfDate date,
+                String date,
                 String type,
                 String professor,
                 String term,
@@ -73,6 +75,24 @@ public class Course extends CaseToDo {
     //EFFECTS: return the credit
     public int getCredit() {
         return credit;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("start hour", timeHoursBegin);
+        json.put("start minute", timeMinutesBegin);
+        json.put("end hour", timeHoursOver);
+        json.put("end minute", timeMinutesOver);
+        json.put("description", description);
+        json.put("date", date);
+        json.put("place", place);
+        json.put("type", type);
+        json.put("professor", professor);
+        json.put("term", term);
+        json.put("credt", credit);
+        return json;
     }
 }
 

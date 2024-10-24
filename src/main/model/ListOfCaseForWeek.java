@@ -1,9 +1,16 @@
 package model;
 
 import java.util.ArrayList;
+import java.lang.reflect.Field;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
 
 
-public class ListOfCaseForWeek {
+
+public class ListOfCaseForWeek implements Writable {
     private ArrayList<CaseToDo> caseListMon;
     private ArrayList<CaseToDo> caseListTue;
     private ArrayList<CaseToDo> caseListWed;
@@ -26,7 +33,7 @@ public class ListOfCaseForWeek {
     //REQUIRES: caseMon must not be null
     //MODIFIES: this
     //EFFECTS: Add a case for Monday
-    private void planMon(CaseToDo caseMon) {
+    public void planMon(CaseToDo caseMon) {
         if (!caseListMon.contains(caseMon)) {
             caseListMon.add(caseMon);
         }
@@ -35,7 +42,7 @@ public class ListOfCaseForWeek {
     //REQUIRES: caseTue must not be null
     //MODIFIES: this
     //EFFECTS: Add a case for TuesDay
-    private void planTue(CaseToDo caseTue) {
+    public void planTue(CaseToDo caseTue) {
         if (!caseListTue.contains(caseTue)) {
             caseListTue.add(caseTue);
         }
@@ -44,7 +51,7 @@ public class ListOfCaseForWeek {
     //REQUIRES: caseWed must not be null
     //MODIFIES: this
     //EFFECTS: Add a case for WednesDay
-    private void planWed(CaseToDo caseWed) {
+    public void planWed(CaseToDo caseWed) {
         if (!caseListWed.contains(caseWed)) {
             caseListWed.add(caseWed);
         }
@@ -53,7 +60,7 @@ public class ListOfCaseForWeek {
     //REQUIRES: caseThu must not be null
     //MODIFIES: this
     //EFFECTS: Add a case for ThusDay
-    private void planThu(CaseToDo caseThu) {
+    public void planThu(CaseToDo caseThu) {
         if (!caseListThu.contains(caseThu)) {
             caseListThu.add(caseThu);
         }
@@ -62,7 +69,7 @@ public class ListOfCaseForWeek {
     //REQUIRES: caseFri must not be null
     //MODIFIES: this
     //EFFECTS: Add a case for FriDay
-    private void planFri(CaseToDo caseFri) {
+    public void planFri(CaseToDo caseFri) {
         if (!caseListFri.contains(caseFri)) {
             caseListFri.add(caseFri);
         }
@@ -71,7 +78,7 @@ public class ListOfCaseForWeek {
     //REQUIRES: caseSat must not be null
     //MODIFIES: this
     //EFFECTS: Add a case for SaturDay
-    private void planSat(CaseToDo caseSat) {
+    public void planSat(CaseToDo caseSat) {
         if (!caseListSat.contains(caseSat)) {
             caseListSat.add(caseSat);
         }
@@ -80,7 +87,7 @@ public class ListOfCaseForWeek {
     //REQUIRES: caseSun must not be null
     //MODIFIES: this
     //EFFECTS: Add a case for TuesDay
-    private void planSun(CaseToDo caseSun) {
+    public void planSun(CaseToDo caseSun) {
         if (!caseListSun.contains(caseSun)) {
             caseListSun.add(caseSun);
         }
@@ -127,24 +134,21 @@ public class ListOfCaseForWeek {
     public void fillWeek(ListOfCase cases) {
         ArrayList<CaseToDo> caseList = cases.getList();
         for (CaseToDo x: caseList) {
-            ListOfDate dates = x.getDate();
-            ArrayList<String> dateList = dates.getDateList();
-            for (String s: dateList) {
-                if (s.equals("Mon")) {
-                    planMon(x);
-                } else if (s.equals("Tue")) {
-                    planTue(x);
-                } else if (s.equals("Wed")) {
-                    planWed(x);
-                } else if (s.equals("Thu")) {
-                    planThu(x);
-                } else if (s.equals("Fri")) {
-                    planFri(x);
-                } else if (s.equals("Sat")) {
-                    planSat(x);
-                } else {
-                    planSun(x);
-                }
+            String s = x.getDate();
+            if (s.equals("Mon")) {
+                planMon(x);
+            } else if (s.equals("Tue")) {
+                planTue(x);
+            } else if (s.equals("Wed")) {
+                planWed(x);
+            } else if (s.equals("Thu")) {
+                planThu(x);
+            } else if (s.equals("Fri")) {
+                planFri(x);
+            } else if (s.equals("Sat")) {
+                planSat(x);
+            } else {
+                planSun(x);
             }
         }
     }
@@ -167,5 +171,56 @@ public class ListOfCaseForWeek {
         } else {
             return caseListSun;
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        ArrayList<ArrayList<CaseToDo>> listWeek = new ArrayList<ArrayList<CaseToDo>>();
+        listWeek.add(caseListMon);
+        listWeek.add(caseListTue);
+        listWeek.add(caseListWed);
+        listWeek.add(caseListThu);
+        listWeek.add(caseListFri);
+        listWeek.add(caseListSat);
+        listWeek.add(caseListSun);
+        json.put("week schedules", thingiesToJson(listWeek));
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray thingiesToJson(ArrayList<ArrayList<CaseToDo>> listWeek) {
+        JSONArray jsonArray = new JSONArray();
+
+        for (ArrayList<CaseToDo> loc : listWeek) {
+            JSONObject daySchedule = new JSONObject();
+            int index = listWeek.indexOf(loc);
+            if (index == 0) {
+                daySchedule.put("Mon Schedule", caseToJson(loc));
+            } else if (index == 1) {
+                daySchedule.put("Tue Schedule", caseToJson(loc));
+            } else if (index == 2) {
+                daySchedule.put("Wed Schedule", caseToJson(loc));
+            } else if (index == 3) {
+                daySchedule.put("Thu Schedule", caseToJson(loc));
+            } else if (index == 4) {
+                daySchedule.put("Fri Schedule", caseToJson(loc));
+            } else if (index == 5) {
+                daySchedule.put("Sat Schedule", caseToJson(loc));
+            } else if (index == 6) {
+                daySchedule.put("Sun Schedule", caseToJson(loc));
+            }
+            jsonArray.put(daySchedule);
+        }
+
+        return jsonArray;
+    }
+
+    private JSONArray caseToJson(ArrayList<CaseToDo> loc) {
+        JSONArray jsonArraySecond = new JSONArray();
+        for (CaseToDo c: loc) {
+            jsonArraySecond.put(c.toJson());
+        }
+        return jsonArraySecond;
     }
 }

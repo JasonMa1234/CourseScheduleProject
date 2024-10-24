@@ -1,14 +1,18 @@
 package model;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 //Represents a case to add in some timetables
-public class CaseToDo {
+public class CaseToDo implements Writable {
     protected String name;
     protected int timeHoursBegin;
     protected int timeMinutesBegin;
     protected int timeHoursOver;
     protected int timeMinutesOver;
     protected String description;
-    protected ListOfDate date;
+    protected String date;
     protected String place;
 
     /*REQUIRES: name cannot be null, timeHoursBegin, timeHoursOver must be integer between 0-24,
@@ -20,7 +24,7 @@ public class CaseToDo {
                     int timeHoursOver, 
                     int timeMinutesOver, 
                     String description,
-                    ListOfDate date,
+                    String date,
                     String place) {
         this.name = name;
         this.timeHoursBegin = timeHoursBegin;
@@ -76,7 +80,7 @@ public class CaseToDo {
     //REQUIRES newDate must not be null
     //MODIFIES: this
     //EFFECTS: change the date to new date
-    public void setDate(ListOfDate newDate) {
+    public void setDate(String newDate) {
         date = newDate;
     }
 
@@ -118,12 +122,27 @@ public class CaseToDo {
     }
 
     //EFFECTS: return the date
-    public ListOfDate getDate() {
+    public String getDate() {
         return date;
     }
 
     //EFFETCS: return the place case take place
     public String getPlace() {
         return place;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("begin hour", timeHoursBegin);
+        json.put("begin minute", timeMinutesBegin);
+        json.put("over hour", timeHoursOver);
+        json.put("over minute", timeMinutesOver);
+        json.put("over hour", timeHoursOver);
+        json.put("description", description);
+        json.put("date", date);
+        json.put("place", place);
+        return json;
     }
 }

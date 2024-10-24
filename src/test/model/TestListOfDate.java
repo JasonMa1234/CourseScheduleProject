@@ -12,7 +12,7 @@ public class TestListOfDate {
     private ListOfDate dateList;
     
     @BeforeEach
-    void runBefore(){
+    void runBefore() {
         dateList = new ListOfDate();
         dateList.addDate("Mon");
         dateList.addDate("Tue");
@@ -20,7 +20,7 @@ public class TestListOfDate {
     }
 
     @Test
-    void testConstructor(){
+    void testConstructor() {
         assertEquals(3, dateList.sizeDate());
     }
 }

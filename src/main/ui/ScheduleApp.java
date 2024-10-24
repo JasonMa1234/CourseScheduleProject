@@ -1,11 +1,17 @@
 package ui;
 
 import model.*;
+import persistence.JsonWriter;
+import persistence.JsonReader;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 //Schedule application
 public class ScheduleApp {
+    private static final String JSON_WEEKSCHEDULE = "./data/weekSchedule.json";
     private ListOfEvents eventList;
     private ListOfCourses courseList;
     private ListOfCaseForWeek weekSchedule;
@@ -13,8 +19,8 @@ public class ScheduleApp {
     private Scanner input;
     private static ListOfDate monWedFri = new ListOfDate();
     private static ListOfDate tueThu = new ListOfDate();
-
-    
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     private static Course stat = new Course("STAT", 
             14, 
@@ -22,7 +28,7 @@ public class ScheduleApp {
             15, 
             0, 
             "lecture", 
-                    monWedFri, 
+                    "Mon", 
             "statistic course", 
             "A", 
             "Winter1", 
@@ -31,24 +37,15 @@ public class ScheduleApp {
     
     //EFFECTS: run the schedule application
     public ScheduleApp() {
-        courseList = new ListOfCourses();
-        eventList = new ListOfEvents();
-        weekSchedule = new ListOfCaseForWeek();
+        // fillLists();
+        this.jsonWriter = new JsonWriter(JSON_WEEKSCHEDULE);
+        this.jsonReader = new JsonReader(JSON_WEEKSCHEDULE);
+        this.courseList = new ListOfCourses();
+        this.eventList = new ListOfEvents();
+        this.weekSchedule = new ListOfCaseForWeek();
         input = new Scanner(System.in);
-        boolean wantKeep = true;
-        while (wantKeep) {
-            displayManual();
-            String respon = input.nextLine().toLowerCase();
-            displayFunctions(respon);
-            new CheckTime(weekSchedule);
-            System.out.println("Do you want to exist?");
-            String wantToExist = input.nextLine().toLowerCase();
-            if (wantToExist.equals("yes")) {
-                wantKeep = false;
-            } else if (wantToExist.equals("no")) {
-                wantKeep = true;
-            }
-        }
+        displayLoop();
+        
         
         // monWedFri.addDate("Mon");
         // monWedFri.addDate("Wed");
@@ -59,13 +56,57 @@ public class ScheduleApp {
         // runSchedule();
     }
 
+    private void fillLists() {
+        ArrayList<ArrayList<CaseToDo>> listWeek = new ArrayList<ArrayList<CaseToDo>>();
+        listWeek.add(weekSchedule.getMon());
+        listWeek.add(weekSchedule.getTue());
+        listWeek.add(weekSchedule.getWed());
+        listWeek.add(weekSchedule.getThu());
+        listWeek.add(weekSchedule.getFri());
+        listWeek.add(weekSchedule.getSat());
+        listWeek.add(weekSchedule.getSun());
+        for (ArrayList<CaseToDo> loc : listWeek) {
+            for (CaseToDo c: loc) {
+                fillCaseList(c);
+            }
+        }
+    }
+
+    private void fillCaseList(CaseToDo caseToDo) {
+        if (caseToDo instanceof Event) {
+            eventList.addCase(caseToDo);
+        } else {
+            courseList.addCase(caseToDo);
+        }
+    }
+
+    private void displayLoop() {
+        boolean wantKeep = true;
+        while (wantKeep) {
+            displayManual();
+            String respon = input.nextLine().toLowerCase();
+            displayFunctions(respon);
+            new CheckTime(weekSchedule);
+            System.out.println("Do you want to exist?(yes/no)");
+            String wantToExist = input.nextLine().toLowerCase();
+
+            if (wantToExist.equals("yes")) {
+                wantKeep = false;
+            } else if (wantToExist.equals("no")) {
+                wantKeep = true;
+            }
+        }
+    }
+
     private void displayManual() {
-        System.out.println("add course or event input 'input case'");
-        System.out.println("want the arrangement for the a day input 'daily arrangement'");
-        System.out.println("manage the daily arrangement input'add or delete item'");
-        System.out.println("Choose to know case in detail input 'detail'");
-        System.out.println("check course's credit input 'check credit'");
-        System.out.println("check number of important event input 'check number of imortant event'");
+        System.out.println("input case -> add course or event");
+        System.out.println("daily arrangement -> arrangement for the a day");
+        System.out.println("add or delete item -> manage the daily arrangement");
+        System.out.println("detail ->  case in detail");
+        System.out.println("check credit -> check course's credit");
+        System.out.println("check number of imortant event -> check number of important event");
+        System.out.println("save files -> save changes to files");
+        System.out.println("load files -> load files");
     }
 
     private void displayFunctions(String respon) {
@@ -83,6 +124,10 @@ public class ScheduleApp {
         } else if (respon.equals("check number of imortant event")) {
             int numImportantEvent = eventList.calculateImportant();
             System.out.println("there are " + numImportantEvent + " important upcoming events");
+        } else if (respon.equals("save files")) {
+            saveFiles();
+        } else if (respon.equals("load files")) {
+            loadFiles();
         }
     }
 
@@ -139,7 +184,7 @@ public class ScheduleApp {
         int timeMinutesBegin = getBeginMinute();
         int timeHoursOver = getOverHour();
         int timeMinutesOver = getOverMinute();
-        ListOfDate date = getDate();
+        String date = getDate();
         String type = getType();
         String professor = getProfessor();
         String term = getTerm();
@@ -175,7 +220,7 @@ public class ScheduleApp {
         int timeMinutesBegin = getBeginMinute();
         int timeHoursOver = getOverHour();
         int timeMinutesOver = getOverMinute();
-        ListOfDate date = getDate();
+        String date = getDate();
         String place = getPlace();
         String description = getDescription();
         CaseToDo event = new Event(name, timeHoursBegin, timeMinutesBegin, timeHoursOver, 
@@ -214,23 +259,9 @@ public class ScheduleApp {
         return input.nextLine();
     }
 
-    private ListOfDate getDate() {
-        ListOfDate dateList = new ListOfDate();
-        boolean wantAdd = true;
-        int numDate = 0;
-        while (wantAdd && numDate <= 7) {
-            System.out.println("Add a date: \n");
-            String date = input.nextLine();
-            dateList.addDate(date);
-            System.out.println("Do you want add new date?\n");
-            String respon = input.nextLine().toLowerCase();
-            if (respon.equals("yes")) {
-                wantAdd = true;
-            } else if (respon.equals("no")) {
-                wantAdd = false;
-            }
-        }
-        return dateList;
+    private String getDate() {
+        System.out.println("Add a date: \n");
+        return input.nextLine();
     }
 
     private String getType() {
@@ -387,96 +418,25 @@ public class ScheduleApp {
                         + beginMinute + " - " + endHour + overMinute + "\n" 
                         + place + " " + description);
     }
+
+    public void saveFiles() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(weekSchedule);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            System.out.println("Unable to write to file");
+        }
+
+    }
+
+    public void loadFiles() {
+        try {
+            weekSchedule = jsonReader.read();
+            System.out.println("Loaded event list from " + JSON_WEEKSCHEDULE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file");
+        }
+    }
 }
-//     //MODIFIES: this
-//     //EFFECTS: create eventlist and courselist, and run the mode selection method
-//     private void runSchedule(){
-//         eventList = new ListOfEvents();
-//         courseList = new ListOfCourses();
-//         init();
-//         System.out.println("successfully created the course list!");
-//     }
-
-//     //MODIFIES: this
-//     //EFFECTS: accept the type user want to insert into list
-//     private void init() {
-//         String command = null;
-//         displayChooseMod();
-//         input = new Scanner(System.in);
-//         input.useDelimiter("\r?\n|\r");
-//         command = input.next();
-//         if (command.equals("Course")){
-//             Boolean continueInput = true;
-//             while (continueInput){
-//                 Course course = createCourse();
-//                 courseList.addCourse (course);
-//                 continueInput = ifCountinue(continueInput);
-//             }
-//             System.out.println("All courses are added");
-//         } else if(command == "Event"){
-//             System.out.println("invalid input");
-//         }else{
-//             System.out.println("invalid input");
-//         }
-//     }
-
-//     private void displayChooseMod(){
-//         System.out.println("Which list would you create? Course or Event?\n");
-//     }
-
-//     //EFFECTS: create the course based on user's requirement
-//     private Course createCourse(){
-//         String courseName;
-//         int timeHoursBegin; 
-//         int timeMinutesBegin;
-//         int timeHoursOver;
-//         int timeMinutesOver; 
-//         String type;
-//         String professor; 
-//         String courseDescription; 
-//         ListOfDate date = monWedFri;
-//         String term;
-//         int credit;
-//         System.out.println("Course's name: \n");
-//         courseName = input.next();
-//         System.out.println("Begin time in hours: \n");
-//         timeHoursBegin = Integer.parseInt(input.next());
-//         System.out.println("Begin time in minutes: \n");
-//         timeMinutesBegin = Integer.parseInt(input.next());
-//         System.out.println("End time in hours \n");
-//         timeHoursOver = Integer.parseInt(input.next());
-//         System.out.println("End time in Minutes: \n");
-//         timeMinutesOver = Integer.parseInt(input.next());
-//         System.out.println("Type is: \n");
-//         type = input.next();
-//         System.out.println("Professor's name: \n");
-//         professor = input.next();
-//         System.out.println("Further description: \n");
-//         courseDescription = input.next();
-//         System.out.println("Term: \n");
-//         term = input.next();
-//         System.out.println("Credit: \n");
-//         credit = Integer.parseInt(input.next());
-//         Course course = new Course( courseName, 
-//         timeHoursBegin, 
-//         timeMinutesBegin,
-//         timeHoursOver, 
-//         timeMinutesOver, 
-//         type, 
-//         professor, 
-//         courseDescription, 
-//         date, 
-//         term, 
-//         credit);
-//         return course;
-//     }
-
-//     //REQUIRES: continueInput must be a boolean and not null
-//     //MODIFIES: continueInput
-//     //EFFECTS: let user decide whther continue inserting course or event
-//     private Boolean ifCountinue(Boolean continueInput){
-//         System.out.println("continue?\n");
-//         continueInput = Boolean.parseBoolean(input.next());
-//         return continueInput;
-//     }
-// }

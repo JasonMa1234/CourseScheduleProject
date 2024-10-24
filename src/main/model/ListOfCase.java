@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class ListOfCase {
     protected ArrayList<CaseToDo> caseList;
 
@@ -21,5 +24,4 @@ public class ListOfCase {
     public ArrayList<CaseToDo> getList(){
         return caseList;
     }
-
 }
