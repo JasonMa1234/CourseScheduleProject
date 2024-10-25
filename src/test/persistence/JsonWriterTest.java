@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -122,8 +121,6 @@ public class JsonWriterTest extends JsonTest {
             ArrayList<CaseToDo> scheduleSun = locw.getSun();
             CaseToDo courseFormCase1 = scheduleMon.get(0);
             Course course1 = (Course) courseFormCase1;
-            CaseToDo courseFormCase2 = scheduleTue.get(0);
-            Course course2 = (Course) courseFormCase2;
             CaseToDo eventFormCase1 = scheduleMon.get(1);
             Event event1 = (Event) eventFormCase1;
             CaseToDo eventFormCase2 = scheduleTue.get(1);

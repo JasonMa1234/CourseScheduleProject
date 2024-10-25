@@ -15,23 +15,22 @@ public class ScheduleApp {
     private ListOfEvents eventList;
     private ListOfCourses courseList;
     private ListOfCaseForWeek weekSchedule;
-    private ListOfCase caseList;
     private Scanner input;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    private static Course stat = new Course("STAT", 
-            14, 
-            0, 
-            15, 
-            0, 
-            "lecture", 
-                    "Mon", 
-            "statistic course", 
-            "A", 
-            "Winter1", 
-            3,
-            "ESB 1000");
+    // private static Course stat = new Course("STAT", 
+    //         14, 
+    //         0, 
+    //         15, 
+    //         0, 
+    //         "lecture", 
+    //                 "Mon", 
+    //         "statistic course", 
+    //         "A", 
+    //         "Winter1", 
+    //         3,
+    //         "ESB 1000");
     
     //EFFECTS: run the schedule application
     public ScheduleApp() {
@@ -77,7 +76,7 @@ public class ScheduleApp {
     }
 
     //MODIFIES: this
-    //EFFECTS: display the main page of the program, and quit when user want to exist
+    //EFFECTS: display the main page of the program, and quit when user want to exit
     private void displayLoop() {
         boolean wantKeep = true;
         while (wantKeep) {
@@ -85,12 +84,12 @@ public class ScheduleApp {
             String respon = input.nextLine().toLowerCase();
             displayFunctions(respon);
             new CheckTime(weekSchedule);
-            System.out.println("Do you want to exist?(yes/no)");
-            String wantToExist = input.nextLine().toLowerCase();
+            System.out.println("Do you want to exit?(yes/no)");
+            String wantToExit = input.nextLine().toLowerCase();
 
-            if (wantToExist.equals("yes")) {
+            if (wantToExit.equals("yes")) {
                 wantKeep = false;
-            } else if (wantToExist.equals("no")) {
+            } else if (wantToExit.equals("no")) {
                 wantKeep = true;
             }
         }
@@ -481,7 +480,6 @@ public class ScheduleApp {
             jsonWriter.write(weekSchedule);
             jsonWriter.close();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             System.out.println("Unable to write to file");
         }
 

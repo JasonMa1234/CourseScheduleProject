@@ -1,15 +1,110 @@
 package persistence;
 
 import model.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonReaderTest extends JsonTest {
+    public ListOfCaseForWeek weekList;
+    public ArrayList<CaseToDo> caseList;
+    private CaseToDo event1;
+    private CaseToDo event2;
+    private CaseToDo courseStat1;
+    private CaseToDo courseStat2;
+    private CaseToDo course2;
+    private CaseToDo event3;
+    private CaseToDo event4;
+    private JsonReader reader;
+
+    @BeforeEach
+    void setUp () {
+        reader = new JsonReader("./data/weekSchedule.json");
+        weekList = new ListOfCaseForWeek();
+        caseList = new ArrayList<CaseToDo>();
+        event1 = new Event("officehour1",
+                            13,
+                            0,
+                            15,
+                            0,
+                            "OfficeHoure",
+                            "Mon",
+                            "ESB1024");
+        event2 = new Event("officehour2",
+                            10,
+                            0,
+                            11,
+                            0,
+                            "OfficeHoure",
+                            "Thu",
+                            "ESB1024");
+        courseStat1 = new Course("STAT", 
+                            14, 
+                            0, 
+                            15, 
+                            0, 
+                            "Statistic 200 lecture",
+                            "Fri",
+                            "lecture",
+                            "A",
+                            "Winter1",
+                            3,
+                            "ESB1024");
+
+        courseStat2 = new Course("STAT", 
+                            14, 
+                            0, 
+                            15, 
+                            0, 
+                            "Statistic 200 lecture",
+                            "Wed",
+                            "lecture",
+                            "A",
+                            "Winter1",
+                            3,
+                            "ESB1024");
+        
+        course2 = new Course("MATH", 
+                            10, 
+                            0, 
+                            12, 
+                            30, 
+                            "Math 200 lecture",
+                            "Tue",
+                            "lecture",
+                            "B",
+                            "Winter1",
+                            3,
+                            "WESB101");
+        event3 = new Event("party1",
+                            13,
+                            0,
+                            15,
+                            0,
+                            "party",
+                            "Sat",
+                            "home");
+        event4 = new Event("party2",
+                            13,
+                            0,
+                            15,
+                            0,
+                            "party",
+                            "Sun",
+                            "home");
+        caseList.add(event1);
+        caseList.add(event2);
+        caseList.add(courseStat1);
+        caseList.add(courseStat2);
+        caseList.add(course2);
+        caseList.add(event3);
+        caseList.add(event4);
+    }
 
     @Test
     void testReaderNonExistentFile() {
@@ -83,4 +178,5 @@ public class JsonReaderTest extends JsonTest {
             fail("Couldn't read from file");
         }
     }
+
 }

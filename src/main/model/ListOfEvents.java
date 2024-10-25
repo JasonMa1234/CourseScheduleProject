@@ -1,13 +1,12 @@
 package model;
 
-import java.util.ArrayList;
 
 // Represents a list of events
-public class ListOfEvents extends ListOfCase{
+public class ListOfEvents extends ListOfCase {
     // private ArrayList<Event> eventList;
 
     //EFFECTS: create a null event list
-    public ListOfEvents(){
+    public ListOfEvents() {
         super();
         // this.eventList = new ArrayList<Event>(); //stub
     }
@@ -34,15 +33,15 @@ public class ListOfEvents extends ListOfCase{
     //     return eventList;
     // }
 
-    public int calculateImportant(){
+    public int calculateImportant() {
         int count = 0;
-        if (caseList.size() == 0){
+        if (caseList.size() == 0) {
             return count;
         }
-        for (CaseToDo e : caseList){
+        for (CaseToDo e : caseList) {
             if (e instanceof Event) {
                 Event event = (Event) e;  // From chatGPT
-                if(event.getImportance()){
+                if (event.getImportance()) {
                     count++;
                 }    
             }

@@ -4,8 +4,7 @@ package ui;
 import java.util.ArrayList;
 
 import java.time.LocalDate;
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
+
 import java.time.LocalTime;
 
 import model.CaseToDo;

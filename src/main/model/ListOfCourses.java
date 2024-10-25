@@ -1,10 +1,8 @@
 package model;
 
-import java.util.List;
-import java.util.ArrayList;
 
 // Represents a list of courses
-public class ListOfCourses extends ListOfCase{
+public class ListOfCourses extends ListOfCase {
     // private ArrayList<Course> courseList;
 
     //EFFECTS: set the initial course list to be null
@@ -37,14 +35,14 @@ public class ListOfCourses extends ListOfCase{
     // }
 
     //EFFECTS: return the total credit in the course list
-    public int calculateCredit(){
+    public int calculateCredit() {
         int totalCredit = 0;
 
-        if (caseList.size() == 0){
+        if (caseList.size() == 0) {
             return totalCredit;
         }
 
-        for(CaseToDo c : caseList){
+        for (CaseToDo c : caseList) {
             if (c instanceof Course) {
                 Course course = (Course) c;  // From chatGPT
                 int courseCredit = course.getCredit();

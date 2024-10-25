@@ -3,7 +3,6 @@ package persistence;
 import model.CaseToDo;
 import model.ListOfCaseForWeek;
 import java.util.ArrayList;
-import model.ListOfCaseForWeek;
 import model.Event;
 import model.Course;
 
@@ -15,7 +14,6 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import org.json.*;
-import org.junit.experimental.categories.Category;
 
 // Represents a reader that reads workroom from JSON data stored in file
 public class JsonReader {
@@ -74,7 +72,8 @@ public class JsonReader {
         return listWeek;
     }
     
-    private void planDay (ListOfCaseForWeek listWeek, ArrayList<CaseToDo> caselist, String day) {
+    //EFFECTS: fill a case in the week schedule according the date given
+    private void planDay(ListOfCaseForWeek listWeek, ArrayList<CaseToDo> caselist, String day) {
         for (CaseToDo c : caselist) { //from chatGPT
             switch (day) {
                 case "Mon": listWeek.planMon(c); 
