@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+
 public class TestListOfCaseForWeek {
     private ListOfCaseForWeek weekSchedule;
     private CaseToDo event1;
@@ -102,5 +104,28 @@ public class TestListOfCaseForWeek {
         assertEquals(courseStat2, weekSchedule.getWed().get(0));
         assertEquals(1,weekSchedule.getThu().size());
         assertEquals(event2, weekSchedule.getThu().get(0));
+    }
+
+    @Test
+    void testGetDateList() {
+        caseList.addCase(event1);//Mon
+        caseList.addCase(event2);//Thu
+        caseList.addCase(courseStat1);//Mon
+        caseList.addCase(courseStat2);//Wed
+        caseList.addCase(course2);//Tue
+        weekSchedule.fillWeek(caseList);
+        ArrayList<CaseToDo> dayMon = weekSchedule.getDateList("Mon");
+        ArrayList<CaseToDo> dayTue = weekSchedule.getDateList("Tue");
+        ArrayList<CaseToDo> dayWed = weekSchedule.getDateList("Wed");
+        ArrayList<CaseToDo> dayThu = weekSchedule.getDateList("Thu");
+        assertEquals(2,dayMon.size());
+        assertEquals(event1, dayMon.get(0));
+        assertEquals(courseStat1, dayMon.get(1));
+        assertEquals(1,dayTue.size());
+        assertEquals(course2, dayTue.get(0));
+        assertEquals(1,dayWed.size());
+        assertEquals(courseStat2, dayWed.get(0));
+        assertEquals(1,dayThu.size());
+        assertEquals(event2, dayThu.get(0));
     }
 }

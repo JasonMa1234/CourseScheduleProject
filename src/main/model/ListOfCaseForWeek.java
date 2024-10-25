@@ -184,12 +184,12 @@ public class ListOfCaseForWeek implements Writable {
         listWeek.add(caseListFri);
         listWeek.add(caseListSat);
         listWeek.add(caseListSun);
-        json.put("week schedules", thingiesToJson(listWeek));
+        json.put("week schedules", caseListToJson(listWeek));
         return json;
     }
 
     // EFFECTS: returns things in this workroom as a JSON array
-    private JSONArray thingiesToJson(ArrayList<ArrayList<CaseToDo>> listWeek) {
+    private JSONArray caseListToJson(ArrayList<ArrayList<CaseToDo>> listWeek) {
         JSONArray jsonArray = new JSONArray();
 
         for (ArrayList<CaseToDo> loc : listWeek) {

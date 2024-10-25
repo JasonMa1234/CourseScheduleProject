@@ -36,60 +36,60 @@ public class CaseToDo implements Writable {
         this.place = place;
     }
 
-    //REQUIRES: newName must not be null
-    //MODIFIES: this
-    //EFFECTS: change the name to the new name
-    public void setName(String newName) {
-        name = newName;
-    }
+    // //REQUIRES: newName must not be null
+    // //MODIFIES: this
+    // //EFFECTS: change the name to the new name
+    // public void setName(String newName) {
+    //     name = newName;
+    // }
 
-    //REQUIRES: newBeginHour must be an integer from 0-24
-    //MODIFIES: this
-    //EFFECTS: change the hour of the start time to the new hour
-    public void setTimeHoursBegin(int newBeginHour) {
-        timeHoursBegin = newBeginHour;
-    }
+    // //REQUIRES: newBeginHour must be an integer from 0-24
+    // //MODIFIES: this
+    // //EFFECTS: change the hour of the start time to the new hour
+    // public void setTimeHoursBegin(int newBeginHour) {
+    //     timeHoursBegin = newBeginHour;
+    // }
 
-    //REQUIRES: newBeginMinute must be an integer from 0-60
-    //MODIFIES: this
-    //EFFECTS: change the minute of the start time to the new minute
-    public void setTimeMinutesBegin(int newBeginMinute) {
-        timeMinutesBegin = newBeginMinute;
-    }
+    // //REQUIRES: newBeginMinute must be an integer from 0-60
+    // //MODIFIES: this
+    // //EFFECTS: change the minute of the start time to the new minute
+    // public void setTimeMinutesBegin(int newBeginMinute) {
+    //     timeMinutesBegin = newBeginMinute;
+    // }
 
-    //REQUIRES: newOverHour must be an integer from 0-60
-    //MODIFIES: this
-    //EFFECTS: change the hour of the end time to the new hour
-    public void setTimeHoursOver(int newOverHour) {
-        timeHoursOver = newOverHour;
-    }
+    // //REQUIRES: newOverHour must be an integer from 0-60
+    // //MODIFIES: this
+    // //EFFECTS: change the hour of the end time to the new hour
+    // public void setTimeHoursOver(int newOverHour) {
+    //     timeHoursOver = newOverHour;
+    // }
 
-    //REQUIRES: newOverMinute must be an integer from 0-60
-    //MODIFIES: this
-    //EFFECTS: change the minute of the end time to the new minute
-    public void setTimeMinutesOver(int newOverMinute) {
-        timeMinutesOver = newOverMinute;
-    }
+    // //REQUIRES: newOverMinute must be an integer from 0-60
+    // //MODIFIES: this
+    // //EFFECTS: change the minute of the end time to the new minute
+    // public void setTimeMinutesOver(int newOverMinute) {
+    //     timeMinutesOver = newOverMinute;
+    // }
 
-    //MODIFIES: this
-    //EFFECTS: change the description to new description
-    public void setDescription(String newDesc) {
-        description = newDesc;
-    }
+    // //MODIFIES: this
+    // //EFFECTS: change the description to new description
+    // public void setDescription(String newDesc) {
+    //     description = newDesc;
+    // }
 
-    //REQUIRES newDate must not be null
-    //MODIFIES: this
-    //EFFECTS: change the date to new date
-    public void setDate(String newDate) {
-        date = newDate;
-    }
+    // //REQUIRES newDate must not be null
+    // //MODIFIES: this
+    // //EFFECTS: change the date to new date
+    // public void setDate(String newDate) {
+    //     date = newDate;
+    // }
 
-    //REQUIRES: newPlace must not be null
-    //MODIFIES: this
-    //EFFECTS: change the place
-    public void setPlace(String newPlace) {
-        place = newPlace;
-    }
+    // //REQUIRES: newPlace must not be null
+    // //MODIFIES: this
+    // //EFFECTS: change the place
+    // public void setPlace(String newPlace) {
+    //     place = newPlace;
+    // }
 
     //EFFECTS: return the name of the case
     public String getName() {
