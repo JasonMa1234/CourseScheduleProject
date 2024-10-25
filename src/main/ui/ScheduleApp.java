@@ -17,8 +17,6 @@ public class ScheduleApp {
     private ListOfCaseForWeek weekSchedule;
     private ListOfCase caseList;
     private Scanner input;
-    private static ListOfDate monWedFri = new ListOfDate();
-    private static ListOfDate tueThu = new ListOfDate();
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
@@ -319,6 +317,7 @@ public class ScheduleApp {
         return input.nextLine();
     }
 
+    //EFFECTS: print our course and event list for a certain day
     private void dailyArrange() {
         System.out.println("Which day's arrangement would you want to check?\n");
         String date = input.nextLine();
@@ -342,6 +341,8 @@ public class ScheduleApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: add or remove an event or course in the schedule
     private void manipulateCase() {
         boolean keepMoodify = true;
         while (keepMoodify) {
@@ -362,14 +363,20 @@ public class ScheduleApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: remove a course
     private void modifyCourse(CaseToDo courseToChange, ArrayList<CaseToDo> dateListToModify) {
         dateListToModify.remove(courseToChange);
     }
 
+
+    //MODIFIES: this
+    //EFFECTS: remove an event
     private void modifyEvent(CaseToDo eventToChange, ArrayList<CaseToDo> dateListToModify) {
         dateListToModify.remove(eventToChange);
     }
 
+    //EFFECTS: print name, time and place and description for the case
     private void lookDetail() {
         System.out.println("Which type of case would you prefer to see in detail?\ncourse\nevent\n");
         String caseType = input.nextLine();
@@ -380,6 +387,7 @@ public class ScheduleApp {
         }
     }
 
+    //EFFECTS: print name, time and place and description for the course
     private void lookCourseDetail() {
         System.out.println("What is the name of the course?");
         String courseName = input.nextLine();
@@ -394,6 +402,7 @@ public class ScheduleApp {
         }
     }
     
+    //EFFECTS: print name, time and place and description for the event
     private void lookEventDetail() {
         System.out.println("What is the event?");
         String eventName = input.nextLine();
@@ -405,6 +414,7 @@ public class ScheduleApp {
         }
     }
 
+    //EFFECTS: print name, time and place and description for the course
     private void printCourse(Course course) {
         String name = course.getName();
         int startHour = course.getTimeHoursBegin();
@@ -428,6 +438,7 @@ public class ScheduleApp {
                         + professor + " " + place + " " + type + " " + description);
     }
 
+    //EFFECTS: print name, time and place and description for the event
     private void printEvent(Event event) {
         String name = event.getName();
         int startHour = event.getTimeHoursBegin();
@@ -449,6 +460,7 @@ public class ScheduleApp {
                         + place + " " + description);
     }
 
+    //EFFECTS: print the list of course user has
     public void printCourseList() {
         System.out.println("in which term's course list would you like to print?");
         String termWant = input.nextLine();
@@ -462,6 +474,7 @@ public class ScheduleApp {
         }
     }
 
+    //EFFECTS:save the week schedule
     public void saveFiles() {
         try {
             jsonWriter.open();
@@ -474,6 +487,7 @@ public class ScheduleApp {
 
     }
 
+    //EFFETCTS: load the week schedule
     public void loadFiles() {
         try {
             weekSchedule = jsonReader.read();

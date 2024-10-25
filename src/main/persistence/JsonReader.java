@@ -45,6 +45,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    //EFFECTS: Find the daily schedule for each day in the file, and 
     private ListOfCaseForWeek parseWeekSchedule(JSONObject jsonObject) {
         ListOfCaseForWeek listWeek = new ListOfCaseForWeek();
         JSONArray jsonArrayWeek = jsonObject.getJSONArray("week schedules");
@@ -65,25 +66,6 @@ public class JsonReader {
                         JSONObject jsonObj = (JSONObject) json;
                         addCases(caseList, jsonObj);
                     }
-    
-                    // for (CaseToDo c : caseList) { //from chatGPT
-                    //     switch (day) {
-                    //         case "Mon": listWeek.planMon(c); 
-                    //         break;
-                    //         case "Tue": listWeek.planTue(c); 
-                    //         break;
-                    //         case "Wed": listWeek.planWed(c); 
-                    //         break;
-                    //         case "Thu": listWeek.planThu(c); 
-                    //         break;
-                    //         case "Fri": listWeek.planFri(c); 
-                    //         break;
-                    //         case "Sat": listWeek.planSat(c); 
-                    //         break;
-                    //         case "Sun": listWeek.planSun(c); 
-                    //         break;
-                    //     }
-                    // }
                     planDay(listWeek,caseList,day);
                 }
             }
@@ -113,6 +95,7 @@ public class JsonReader {
         }
     }
 
+    //EFFECTS: add a case to the list of case
     private ArrayList<CaseToDo> addCases(ArrayList<CaseToDo> caseList, JSONObject jsonObject) {
         boolean isEvent = Boolean.valueOf(jsonObject.getBoolean("is Event"));
         String name = String.valueOf(jsonObject.getString("name"));
@@ -125,11 +108,6 @@ public class JsonReader {
         String place = String.valueOf(jsonObject.getString("place"));
         if (isEvent) {
             addEvent(name, startHour,startMinute,overHour,overMinute,date,description,place,caseList,jsonObject);
-            // boolean importance = Boolean.valueOf(jsonObject.getBoolean("importance"));
-            // CaseToDo event = new Event(name, startHour, startMinute, overMinute, overHour, description, date, place);
-            // Event eventE = (Event) event;
-            // eventE.setImportance(importance);
-            // caseList.add(eventE);
         } else {
             String type = String.valueOf(jsonObject.getString("type"));
             String term = String.valueOf(jsonObject.getString("term"));
@@ -143,6 +121,7 @@ public class JsonReader {
         return caseList;
     }
     
+    //EFFECTS: add a event according to the information in the file
     private void addEvent(String name, int startHour, int startMinute, int overHour, int overMinute, String date,
                          String description,String place, ArrayList<CaseToDo> caseList, JSONObject jsonObject) {
         boolean importance = Boolean.valueOf(jsonObject.getBoolean("importance"));
