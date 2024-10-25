@@ -11,27 +11,18 @@ import org.junit.jupiter.api.Test;
 public class TestListOfCourses {
     private ListOfCourses courseList1;
     private ListOfCourses courseList2;
-    private static ListOfDate monWedFri;
-    private static ListOfDate tueThu;
     private Course stat;
     private Course math;
 
     @BeforeEach
     void runBefore() {
-        monWedFri = new ListOfDate();
-        tueThu = new ListOfDate();
-        monWedFri.addDate("Mon");
-        monWedFri.addDate("Wed");
-        monWedFri.addDate("Fri");
-        tueThu.addDate("Tue");
-        tueThu.addDate("Thu");
         stat = new Course("STAT", 
                         14, 
                         0, 
                         15, 
                         0, 
                         "Statistic 200 lecture",
-                        monWedFri,
+                        "Mon",
                         "lecture",
                         "A",
                         "Winter1",
@@ -43,7 +34,7 @@ public class TestListOfCourses {
                         12, 
                         30, 
                         "Math 200 lecture",
-                        tueThu,
+                        "Tue",
                         "lecture",
                         "B",
                         "Winter1",

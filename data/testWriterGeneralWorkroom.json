@@ -1,0 +1,65 @@
+{"week schedules": [
+    {"Mon Schedule": [
+        {
+            "end minute": 0,
+            "date": "Mon",
+            "is Event": false,
+            "description": "Statistic 200 lecture",
+            "type": "lecture",
+            "professor": "A",
+            "start minute": 0,
+            "end hour": 15,
+            "name": "STAT",
+            "term": "Winter1",
+            "place": "ESB1024",
+            "start hour": 14,
+            "credit": 3
+        },
+        {
+            "end minute": 0,
+            "date": "Mon",
+            "is Event": true,
+            "start minute": 0,
+            "end hour": 15,
+            "importance": true,
+            "name": "officehour1",
+            "description": "OfficeHoure",
+            "place": "ESB1024",
+            "start hour": 13
+        }
+    ]},
+    {"Tue Schedule": [
+        {
+            "end minute": 30,
+            "date": "Tue",
+            "is Event": false,
+            "description": "Math 200 lecture",
+            "type": "lecture",
+            "professor": "B",
+            "start minute": 0,
+            "end hour": 12,
+            "name": "MATH",
+            "term": "Winter1",
+            "place": "WESB101",
+            "start hour": 10,
+            "credit": 3
+        },
+        {
+            "end minute": 0,
+            "date": "Tue",
+            "is Event": true,
+            "start minute": 0,
+            "end hour": 11,
+            "importance": false,
+            "name": "officehour2",
+            "description": "Meet new people",
+            "place": "ESB1024",
+            "start hour": 10
+        }
+    ]},
+    {"Wed Schedule": []},
+    {"Wed Schedule": []},
+    {"Wed Schedule": []},
+    {"Wed Schedule": []},
+    {"Wed Schedule": []}
+]}

@@ -4,6 +4,8 @@ import model.CaseToDo;
 import model.ListOfCaseForWeek;
 import java.util.ArrayList;
 import model.ListOfCaseForWeek;
+import model.Event;
+import model.Course;
 
 
 import java.io.IOException;
@@ -64,17 +66,25 @@ public class JsonReader {
                         addCases(caseList, jsonObj);
                     }
     
-                    for (CaseToDo c : caseList) {
-                        switch (day) {
-                            case "Mon": listWeek.planMon(c); break;
-                            case "Tue": listWeek.planTue(c); break;
-                            case "Wed": listWeek.planWed(c); break;
-                            case "Thu": listWeek.planThu(c); break;
-                            case "Fri": listWeek.planFri(c); break;
-                            case "Sat": listWeek.planSat(c); break;
-                            case "Sun": listWeek.planSun(c); break;
-                        }
-                    }
+                    // for (CaseToDo c : caseList) { //from chatGPT
+                    //     switch (day) {
+                    //         case "Mon": listWeek.planMon(c); 
+                    //         break;
+                    //         case "Tue": listWeek.planTue(c); 
+                    //         break;
+                    //         case "Wed": listWeek.planWed(c); 
+                    //         break;
+                    //         case "Thu": listWeek.planThu(c); 
+                    //         break;
+                    //         case "Fri": listWeek.planFri(c); 
+                    //         break;
+                    //         case "Sat": listWeek.planSat(c); 
+                    //         break;
+                    //         case "Sun": listWeek.planSun(c); 
+                    //         break;
+                    //     }
+                    // }
+                    planDay(listWeek,caseList,day);
                 }
             }
         }
@@ -82,8 +92,29 @@ public class JsonReader {
         return listWeek;
     }
     
+    private void planDay (ListOfCaseForWeek listWeek, ArrayList<CaseToDo> caselist, String day) {
+        for (CaseToDo c : caselist) { //from chatGPT
+            switch (day) {
+                case "Mon": listWeek.planMon(c); 
+                break;
+                case "Tue": listWeek.planTue(c); 
+                break;
+                case "Wed": listWeek.planWed(c); 
+                break;
+                case "Thu": listWeek.planThu(c); 
+                break;
+                case "Fri": listWeek.planFri(c); 
+                break;
+                case "Sat": listWeek.planSat(c); 
+                break;
+                case "Sun": listWeek.planSun(c); 
+                break;
+            }
+        }
+    }
 
-    private ArrayList<CaseToDo> addCases(ArrayList<CaseToDo> caseListMon, JSONObject jsonObject) {
+    private ArrayList<CaseToDo> addCases(ArrayList<CaseToDo> caseList, JSONObject jsonObject) {
+        boolean isEvent = Boolean.valueOf(jsonObject.getBoolean("is Event"));
         String name = String.valueOf(jsonObject.getString("name"));
         int startHour = Integer.valueOf(jsonObject.getInt("start hour"));
         int startMinute = Integer.valueOf(jsonObject.getInt("start minute"));
@@ -92,9 +123,32 @@ public class JsonReader {
         String date = String.valueOf(jsonObject.getString("date"));
         String description = String.valueOf(jsonObject.getString("description"));
         String place = String.valueOf(jsonObject.getString("place"));
-        CaseToDo caseToDo = new CaseToDo(name, startHour, startMinute, overMinute, overHour, description, date, place);
-        caseListMon.add(caseToDo);
-        return caseListMon;
+        if (isEvent) {
+            addEvent(name, startHour,startMinute,overHour,overMinute,date,description,place,caseList,jsonObject);
+            // boolean importance = Boolean.valueOf(jsonObject.getBoolean("importance"));
+            // CaseToDo event = new Event(name, startHour, startMinute, overMinute, overHour, description, date, place);
+            // Event eventE = (Event) event;
+            // eventE.setImportance(importance);
+            // caseList.add(eventE);
+        } else {
+            String type = String.valueOf(jsonObject.getString("type"));
+            String term = String.valueOf(jsonObject.getString("term"));
+            String professor = String.valueOf(jsonObject.getString("professor"));
+            int credit = Integer.valueOf(jsonObject.getInt("credit"));
+            CaseToDo course = new Course(name, startHour, startMinute, overHour, overMinute, description, date, type, 
+                                        professor, term, credit, place);
+            Course courseC = (Course) course;
+            caseList.add(courseC);
+        }
+        return caseList;
     }
-
+    
+    private void addEvent(String name, int startHour, int startMinute, int overHour, int overMinute, String date,
+                         String description,String place, ArrayList<CaseToDo> caseList, JSONObject jsonObject) {
+        boolean importance = Boolean.valueOf(jsonObject.getBoolean("importance"));
+        CaseToDo event = new Event(name, startHour, startMinute, overMinute, overHour, description, date, place);
+        Event eventE = (Event) event;
+        eventE.setImportance(importance);
+        caseList.add(eventE);
+    }
 }

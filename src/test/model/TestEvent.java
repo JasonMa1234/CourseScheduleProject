@@ -9,19 +9,17 @@ import org.junit.jupiter.api.Test;
 
 public class TestEvent {
     private Event officeHour;
-    private static ListOfDate mon;
 
     @BeforeEach
     void runBefore() {
-        mon = new ListOfDate();
-        mon.addDate("Mon");
+
         officeHour = new Event("officehour",
                         14,
                         0,
                         15,
                         0,
                         "OfficeHoure",
-                        mon,
+                        "Mon",
                         "ESB1024");
     }
 
@@ -33,7 +31,7 @@ public class TestEvent {
         assertEquals(15, officeHour.getTimeHoursOver());
         assertEquals(0, officeHour.getTimeMinutesOver());
         assertEquals("OfficeHoure", officeHour.getDescription());
-        assertEquals(mon, officeHour.getDate());
+        assertEquals("Mon", officeHour.getDate());
         assertFalse(officeHour.getImportance());
         assertEquals("ESB1024", officeHour.getPlace());
     }

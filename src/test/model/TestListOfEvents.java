@@ -13,23 +13,17 @@ public class TestListOfEvents {
     private ListOfEvents eventList2;
     private Event officeHour;
     private Event clubActivity;
-    private static ListOfDate mon;
-    private static ListOfDate tue;
 
 
     @BeforeEach
     void runBefore() {
-        mon = new ListOfDate();
-        mon.addDate("Mon");
-        tue = new ListOfDate();
-        tue.addDate("Tue");
         officeHour = new Event("officehour1",
                             13,
                             0,
                             15,
                             0,
                             "OfficeHoure",
-                            mon,
+                            "Mon",
                             "ESB1024");
         clubActivity =  new Event("officehour2",
                         10,
@@ -37,7 +31,7 @@ public class TestListOfEvents {
                         11,
                         0,
                         "OfficeHoure",
-                        tue,
+                        "Tue",
                         "ESB1024");
         clubActivity.setImportance(true);
         eventList1 = new ListOfEvents();

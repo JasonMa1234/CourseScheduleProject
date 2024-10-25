@@ -37,7 +37,6 @@ public class ScheduleApp {
     
     //EFFECTS: run the schedule application
     public ScheduleApp() {
-        // fillLists();
         this.jsonWriter = new JsonWriter(JSON_WEEKSCHEDULE);
         this.jsonReader = new JsonReader(JSON_WEEKSCHEDULE);
         this.courseList = new ListOfCourses();
@@ -45,26 +44,21 @@ public class ScheduleApp {
         this.weekSchedule = new ListOfCaseForWeek();
         input = new Scanner(System.in);
         displayLoop();
-        
-        
-        // monWedFri.addDate("Mon");
-        // monWedFri.addDate("Wed");
-        // monWedFri.addDate("Fri");
-        // tueThu.addDate("Tue");
-        // tueThu.addDate("Thu");
-
-        // runSchedule();
     }
 
+    //MODIFIES: this
+    /*EFFECTS: add cases from the week schedule in the course and event list
+     *          according to the actual type of case
+    */
     private void fillLists() {
         ArrayList<ArrayList<CaseToDo>> listWeek = new ArrayList<ArrayList<CaseToDo>>();
-        listWeek.add(weekSchedule.getMon());
-        listWeek.add(weekSchedule.getTue());
-        listWeek.add(weekSchedule.getWed());
-        listWeek.add(weekSchedule.getThu());
-        listWeek.add(weekSchedule.getFri());
-        listWeek.add(weekSchedule.getSat());
-        listWeek.add(weekSchedule.getSun());
+        listWeek.add(weekSchedule.getMon() != null ? weekSchedule.getMon() : new ArrayList<>());
+        listWeek.add(weekSchedule.getTue() != null ? weekSchedule.getTue() : new ArrayList<>());
+        listWeek.add(weekSchedule.getWed() != null ? weekSchedule.getWed() : new ArrayList<>());
+        listWeek.add(weekSchedule.getThu() != null ? weekSchedule.getThu() : new ArrayList<>());
+        listWeek.add(weekSchedule.getFri() != null ? weekSchedule.getFri() : new ArrayList<>());
+        listWeek.add(weekSchedule.getSat() != null ? weekSchedule.getSat() : new ArrayList<>());
+        listWeek.add(weekSchedule.getSun() != null ? weekSchedule.getSun() : new ArrayList<>());
         for (ArrayList<CaseToDo> loc : listWeek) {
             for (CaseToDo c: loc) {
                 fillCaseList(c);
@@ -72,6 +66,10 @@ public class ScheduleApp {
         }
     }
 
+    //MODIFIES: this
+    /*EFFECTS: add the case from list week days into the eventlist and courselist according 
+     * to the actual type
+    */
     private void fillCaseList(CaseToDo caseToDo) {
         if (caseToDo instanceof Event) {
             eventList.addCase(caseToDo);
@@ -80,6 +78,8 @@ public class ScheduleApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: display the main page of the program, and quit when user want to exist
     private void displayLoop() {
         boolean wantKeep = true;
         while (wantKeep) {
@@ -98,6 +98,7 @@ public class ScheduleApp {
         }
     }
 
+    //EFFECTS: diaplay functionality that is available
     private void displayManual() {
         System.out.println("input case -> add course or event");
         System.out.println("daily arrangement -> arrangement for the a day");
@@ -105,10 +106,13 @@ public class ScheduleApp {
         System.out.println("detail ->  case in detail");
         System.out.println("check credit -> check course's credit");
         System.out.println("check number of imortant event -> check number of important event");
+        System.out.println("print course list -> print the course list");
         System.out.println("save files -> save changes to files");
         System.out.println("load files -> load files");
     }
 
+    //MODIFIES: this
+    //EFFECTS: choose the functionality to run with the given respons
     private void displayFunctions(String respon) {
         if (respon.equals("input case")) {
             addCase();
@@ -128,9 +132,13 @@ public class ScheduleApp {
             saveFiles();
         } else if (respon.equals("load files")) {
             loadFiles();
+        } else if (respon.equals("print course list")) {
+            printCourseList();
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: add courses or events in the courseList and eventList according to their type
     private void addCase() {
         boolean wantAdd = true;
         System.out.println("Add course or event in your schedule\n");
@@ -148,12 +156,17 @@ public class ScheduleApp {
         weekSchedule.fillWeek(eventList);
     }
 
+    //MODIFIES: this
+    //EFFECTS: let users choose which type of case they are adding, course or event
     private void checkType() {
         System.out.println("Which type of case would you prefer to take?\ncourse\nevent\n");
         String caseType = input.nextLine();
         runType(caseType);
     }
 
+    //REQUIRES: case Type must be one of: course, event
+    //MODIFIES: this
+    //EFFECTS: run methods to add course or event according to the type given
     private void runType(String caseType) {
         if (caseType.equals("course")) {
             runCourse();
@@ -162,6 +175,8 @@ public class ScheduleApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: keep adding course until the user does not want to add anymore
     private void runCourse() {
         boolean wantAdd = true;
         while (wantAdd) {
@@ -177,6 +192,7 @@ public class ScheduleApp {
         }
     }
 
+    //EFFECTS: create a course object with the information user input
     private CaseToDo getCourse() {
         System.out.println("input information for the course: \n");
         String name = getName(); 
@@ -197,6 +213,8 @@ public class ScheduleApp {
         return course;
     }
 
+    //MODIFIES: this
+    //EFFECTS: keep adding event until the user does not want to add anymore
     private void runEvent() {
         boolean wantAdd = true;
         while (wantAdd) {
@@ -213,6 +231,7 @@ public class ScheduleApp {
         }
     }
 
+    //EFFECTS: create an event object with the information user input
     private CaseToDo getEvent() {
         System.out.println("input information for the event: \n");
         String name = getName(); 
@@ -228,62 +247,73 @@ public class ScheduleApp {
         return event;
     }
 
-
+    //EFFECTS: return the name of case
     private String getName() {
         System.out.println("What's the name?\n");
         return input.nextLine();
     }
 
+    //EFFECTS: return the hour part of the start time
     private int getBeginHour() {
         System.out.println("What's the begin hour?\n");
         return Integer.parseInt(input.nextLine());
     }
 
+    //EFFECTS: return the minute part of the start time
     private int getBeginMinute() {
         System.out.println("What's the begin minute?\n");
         return Integer.parseInt(input.nextLine());
     }
 
+    //EFFECTS: return the hour part of the end time
     private int getOverHour() {
         System.out.println("What's the over hour?\n");
         return Integer.parseInt(input.nextLine());
     }
 
+    //EFFECTS: return the minute part of the end time
     private int getOverMinute() {
         System.out.println("What's the over minute?\n");
         return Integer.parseInt(input.nextLine());
     }
 
+    //EFFECTS: return the description of the case
     private String getDescription() {
         System.out.println("Further description?\n");
         return input.nextLine();
     }
 
+    //EFFECTS: return the date of the case
     private String getDate() {
         System.out.println("Add a date: \n");
         return input.nextLine();
     }
 
+    //EFFECTS: get the type of the course, ex: lecture, lab...
     private String getType() {
         System.out.println("What type is it?\n");
         return input.nextLine();
     }
 
+    //EFFECTS: get the name of the professor
     private String getProfessor() {
         System.out.println("What's the professor?\n");
         return input.nextLine();
     }
 
+    //EFFECTS: get the term it starts
     private String getTerm() {
         System.out.println("What's the term?\n");
         return input.nextLine();
     }
 
+    //EFFECTS: get the credit of the course
     private int getCredit() {
         System.out.println("What's the credit?\n");
         return Integer.parseInt(input.nextLine());
     }
 
+    //EFFECTS: get the plae where the case takes place in
     private String getPlace() {
         System.out.println("What's the place?\n");
         return input.nextLine();
@@ -419,6 +449,19 @@ public class ScheduleApp {
                         + place + " " + description);
     }
 
+    public void printCourseList() {
+        System.out.println("in which term's course list would you like to print?");
+        String termWant = input.nextLine();
+        ArrayList<CaseToDo> listOfCourse = courseList.getList();
+        for (CaseToDo c : listOfCourse) {
+            Course course = (Course) c;
+            String term = course.getTerm();
+            if (term.equals(termWant)) {
+                printCourse(course);
+            }
+        }
+    }
+
     public void saveFiles() {
         try {
             jsonWriter.open();
@@ -434,6 +477,7 @@ public class ScheduleApp {
     public void loadFiles() {
         try {
             weekSchedule = jsonReader.read();
+            fillLists();
             System.out.println("Loaded event list from " + JSON_WEEKSCHEDULE);
         } catch (IOException e) {
             System.out.println("Unable to read from file");

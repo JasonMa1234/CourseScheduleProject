@@ -10,21 +10,17 @@ import org.junit.jupiter.api.Test;
 
 public class TestCourse {
     private Course stat;
-    private static ListOfDate monWedFri;
 
     @BeforeEach
     void runBefore() {
-        monWedFri = new ListOfDate();
-        monWedFri.addDate("Mon");
-        monWedFri.addDate("Wed");
-        monWedFri.addDate("Fri");
+
         stat = new Course("STAT", 
                         14, 
                         0, 
                         15, 
                         0, 
                         "Statistic 200 lecture",
-                        monWedFri,
+                        "Mon",
                         "lecture",
                         "A",
                         "Winter1",
@@ -44,7 +40,7 @@ public class TestCourse {
         assertEquals("Statistic 200 lecture", stat.getDescription());
         assertEquals("Winter1", stat.getTerm());
         assertEquals(3, stat.getCredit());
-        assertEquals(monWedFri, stat.getDate());
+        assertEquals("Mon", stat.getDate());
         assertEquals("ESB1024", stat.getPlace());
     }
 }

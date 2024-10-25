@@ -35,6 +35,7 @@ public class Event extends CaseToDo {
     @Override
     public JSONObject toJson() {
     JSONObject json = new JSONObject();
+    json.put("is Event", true);
     json.put("name", name);
     json.put("start hour", timeHoursBegin);
     json.put("start minute", timeMinutesBegin);

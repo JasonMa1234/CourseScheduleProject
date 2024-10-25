@@ -80,6 +80,7 @@ public class Course extends CaseToDo {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
+        json.put("is Event", false);
         json.put("name", name);
         json.put("start hour", timeHoursBegin);
         json.put("start minute", timeMinutesBegin);
@@ -91,7 +92,7 @@ public class Course extends CaseToDo {
         json.put("type", type);
         json.put("professor", professor);
         json.put("term", term);
-        json.put("credt", credit);
+        json.put("credit", credit);
         return json;
     }
 }
