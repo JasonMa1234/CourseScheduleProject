@@ -21,7 +21,7 @@ I plan to design a plug-in software for ubc's workday website for personal time 
 ## User Stories
 - I want to add a forum for my tomorrow daily arrangement
 - I want to add a course to the timetable for my next term
-- I want to remove a lecture this week since professor is sick this week and Ii do not need to come to the lecture
+- I want to remove a lecture this week since professor is sick this week and i do not need to come to the lecture
 - I want to check my daily arrangement to see when is the office hour start
 - I want to be notified when it is time to go to the office hour
 - I want to be able to check the lecture's classroom at the start of the term
