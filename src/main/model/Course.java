@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 import org.json.JSONObject;
 
 //Represents a course user enrolled
@@ -44,18 +42,18 @@ public class Course extends CaseToDo {
         professor = pro;
     }
 
-    /*  REQUIRES: term must not be null, date must be String
-                from "Winter1", "Winter2", "Summer" */
-    private void setTerm(String term) {
-        this.term = term;
-    }
+    // /*  REQUIRES: term must not be null, date must be String
+    //             from "Winter1", "Winter2", "Summer" */
+    // private void setTerm(String term) {
+    //     this.term = term;
+    // }
 
-    //REQUIRES credit >= 0
-    //MODIFIES: this
-    //EFFECTS: define the course's credit
-    private void setCredit(int credit) {
-        this.credit = credit;
-    }
+    // //REQUIRES credit >= 0
+    // //MODIFIES: this
+    // //EFFECTS: define the course's credit
+    // private void setCredit(int credit) {
+    //     this.credit = credit;
+    // }
 
     //EFFECTS: return the course type
     public String getType() {
