@@ -54,13 +54,13 @@ public class CheckTime {
             int beginHour = c.getTimeHoursBegin();
             int beginMinute = c.getTimeMinutesBegin();
             if (beginHour == hour) {
-                if ((minute + 30) > beginMinute) {
+                if (minute > beginMinute) {
+                    int timeOver = minute - beginMinute;
+                    System.out.println("you are " + timeOver + "minutes late for " + name);
+                } else if ((minute + 30) > beginMinute) {
                     int timeLeft = beginMinute - minute;
                     System.out.println(name + " is beginning in " + timeLeft + " minutes");
-                } else if (minute > beginMinute) {
-                    int timeOver = minute - beginMinute;
-                    System.out.println("you are " + timeOver + " late for " + name);
-                } else {
+                }  else {
                     System.out.println(name + " is starting!");
                 }
             } else if (hour > beginHour) {

@@ -5,44 +5,33 @@
         "is Event": false,
         "description": "",
         "type": "Lecture",
-        "credit": 3,
-        "professor": "B",
+        "professor": "Paul",
+        "start minute": 0,
+        "end hour": 12,
+        "name": "CPSC210",
+        "term": "Term1",
+        "place": "LIFE",
+        "start hour": 11,
+        "credit": 3
+    }]},
+    {"Tue Schedule": []},
+    {"Wed Schedule": [{
+        "end minute": 0,
+        "date": "Wed",
+        "is Event": false,
+        "description": "",
+        "type": "Lecture",
+        "professor": "Soline",
         "start minute": 0,
         "end hour": 11,
-        "name": "A",
-        "term": "Winter1",
-        "place": "C",
-        "start hour": 10
+        "name": "FREN101",
+        "term": "Term1",
+        "place": "ESB",
+        "start hour": 10,
+        "credit": 3
     }]},
-    {"Tue Schedule": [
-        {
-            "end minute": 0,
-            "date": "Tue",
-            "is Event": true,
-            "start minute": 0,
-            "end hour": 11,
-            "importance": false,
-            "name": "AA",
-            "description": "",
-            "place": "BB",
-            "start hour": 10
-        },
-        {
-            "end minute": 0,
-            "date": "Tue",
-            "is Event": true,
-            "start minute": 0,
-            "end hour": 12,
-            "importance": false,
-            "name": "AAA",
-            "description": "",
-            "place": "BBB",
-            "start hour": 11
-        }
-    ]},
-    {"Wed Schedule": []},
-    {"Wed Schedule": []},
-    {"Wed Schedule": []},
-    {"Wed Schedule": []},
-    {"Wed Schedule": []}
+    {"Tue Schedule": []},
+    {"Tue Schedule": []},
+    {"Tue Schedule": []},
+    {"Tue Schedule": []}
 ]}

@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 //Represents a case to add in some timetables
-public class CaseToDo implements Writable {
+public abstract class CaseToDo implements Writable {
     protected String name;
     protected int timeHoursBegin;
     protected int timeMinutesBegin;
