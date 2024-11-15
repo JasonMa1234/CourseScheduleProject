@@ -175,13 +175,19 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
             Course course = (Course) c;
             String date = course.getDate();
             String courseInfo = printCourse(course);
-            if (dayPanels.containsKey(date)) {
-                JLabel courseLabel = new JLabel(courseInfo);
-                courseLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                dayPanels.get(date).add(courseLabel);
-                infoPanel.revalidate();
-                infoPanel.repaint();
-            }
+            // if (dayPanels.containsKey(date)) {
+            //     JLabel courseLabel = new JLabel(courseInfo);
+            //     courseLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            //     dayPanels.get(date).add(courseLabel);
+            //     infoPanel.revalidate();
+            //     infoPanel.repaint();
+            // }
+            JLabel courseLabel = new JLabel(courseInfo);
+            courseLabel.setHorizontalAlignment(SwingConstants.LEFT);
+            courseLabel.setBorder(new EmptyBorder(5, 0, 5, 0));
+            infoPanel.add(courseLabel);
+            infoPanel.revalidate();
+            infoPanel.repaint();
         }
     }
 
