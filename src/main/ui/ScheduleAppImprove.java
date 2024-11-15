@@ -77,6 +77,7 @@ public class ScheduleAppImprove {
         System.out.println("p       -> Print the course list");
         System.out.println("s       -> Save changes to files");
         System.out.println("l       -> Load saved files");
+        System.out.println("GUI     -> show user interface");
         System.out.println("===========================");
     }
 
@@ -119,6 +120,8 @@ public class ScheduleAppImprove {
             loadFiles();
         } else if (respon.equals("p")) {
             printCourseList();
+        } else if (respon.equals("gui")) {
+            new GraphicalUserInterface();
         }
     }
 
@@ -232,13 +235,13 @@ public class ScheduleAppImprove {
     }
 
     //EFFECTS: return the name of case
-    private String getName() {
+    public String getName() {
         System.out.println("What's the name?\n");
         return input.nextLine();
     }
 
     //EFFECTS: return the hour part of the start time
-    private int getNum(String que) {
+    public int getNum(String que) {
         int beginHour = 0;
         boolean wrongNumber = false;
         do {
@@ -255,7 +258,7 @@ public class ScheduleAppImprove {
         return beginHour;
     }
 
-    private String getOneFromList(String que, ArrayList<String> list) {
+    public String getOneFromList(String que, ArrayList<String> list) {
         System.out.println(que + " \n");
         String respon = "";
         boolean illegalInput = false;
@@ -272,7 +275,7 @@ public class ScheduleAppImprove {
         return respon;
     }
 
-    private String getInfo(String info) {
+    public String getInfo(String info) {
         System.out.println(info + "\n");
         return input.nextLine();
     }
@@ -372,7 +375,7 @@ public class ScheduleAppImprove {
             Course element = (Course) c;
             if (element.getName().equals(courseName)
                     && element.getType().equals(courseType)) {
-                printCourse(element);
+                System.out.println(printCourse(element)); 
             }
         }
     }
@@ -390,7 +393,7 @@ public class ScheduleAppImprove {
     }
 
     //EFFECTS: print name, time and place and description for the course
-    private void printCourse(Course course) {
+    private String printCourse(Course course) {
         String name = course.getName();
         int startHour = course.getTimeHoursBegin();
         int startMinute = course.getTimeMinutesBegin();
@@ -408,9 +411,9 @@ public class ScheduleAppImprove {
         if (endMinute < 10) {
             overMinute = "0" + overMinute;
         }
-        System.out.println(name + "\n" + " " + startHour + ":"
-                        + beginMinute + " - " + endHour + overMinute + "\n"
-                        + professor + " " + place + " " + type + " " + description);
+        return name + "\n" + " " + startHour + ":"
+            + beginMinute + " - " + endHour + overMinute + "\n"
+            + professor + " " + place + " " + type + " " + description;
     }
 
     //EFFECTS: print name, time and place and description for the event
@@ -444,7 +447,7 @@ public class ScheduleAppImprove {
             Course course = (Course) c;
             String term = course.getTerm();
             if (term.equals(termWant)) {
-                printCourse(course);
+                System.out.println(printCourse(course));
             }
         }
     }
