@@ -2,8 +2,11 @@ package ui;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import model.ListOfCourses;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 import model.Course;
 import model.ListOfCaseForWeek;
 import model.CaseToDo;
@@ -14,8 +17,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 
 public class GraphicalUserInterface extends JFrame implements ActionListener {
     private ListOfCourses courseList;
@@ -32,11 +39,17 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
     private JTextField txtCredit = new JTextField(10);
     private JTextField txtDescription = new JTextField(10);
     private JTextField txtPlace = new JTextField(10);
+    private JTable courseTable = new JTable();
     private JPanel infoPanel;
     private JPanel inputPanel;
     private Map<String, JPanel> dayPanels;
+    private static final String JSON_WEEKSCHEDULE = "./data/weekSchedule.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
-        private static final ArrayList<String> week = new ArrayList<>(
+
+
+    private static final ArrayList<String> week = new ArrayList<>(
             Arrays.asList("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"));
 
     public GraphicalUserInterface() {
@@ -45,10 +58,13 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
         this.courseList = new ListOfCourses();
         this.weekSchedule = new ListOfCaseForWeek();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(600, 450));
+        setPreferredSize(new Dimension(1300, 500));
         setLayout(new BorderLayout());
         dayPanels = new HashMap<>();
         // Panel for days of the week (left side)
+        this.jsonWriter = new JsonWriter(JSON_WEEKSCHEDULE);
+        this.jsonReader = new JsonReader(JSON_WEEKSCHEDULE);
+
         infoPanel = createInfoPanel();
 
         // Panel for input section (right side)
@@ -67,18 +83,18 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BorderLayout());
         infoPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-
-        JPanel titlePanel = new JPanel(new GridLayout(1, 7, 5, 5));
-        titlePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        
-        JPanel coursePanel = createCoursePanel();
-
-        for (String day : week) {
-            JLabel dayLabel = new JLabel(day, SwingConstants.CENTER);
-            titlePanel.add(dayLabel);
+        infoPanel.setPreferredSize(new Dimension(1000, 500));
+        String[] columnNames = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+        Object[][] data = new Object[10][7];;
+        DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
+        JTable table = new JTable(tableModel);
+        table.setRowHeight(50);
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(new MultiLineTableCellRenderer());
         }
-        infoPanel.add(titlePanel, BorderLayout.NORTH);
-        infoPanel.add(coursePanel,BorderLayout.CENTER);
+        courseTable = table;
+        JScrollPane scrollPane = new JScrollPane(table);
+        infoPanel.add(scrollPane, BorderLayout.CENTER);
         return infoPanel;
     }
 
@@ -86,33 +102,30 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
         inputPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        inputPanel.setPreferredSize(new Dimension(300, 500));
+        JButton inputButton = createButton("Input");
+        JButton saveButton = createButton("SaveCourse");
+        JButton loadButton = createButton("LoadCourse");
 
-        // Button at the top of the input panel
-        JButton inputButton = new JButton("Input");
-        inputButton.addActionListener(this);
-        inputButton.setPreferredSize(new Dimension(100, 30));
-        inputButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the button
-
-        inputPanel.add(Box.createVerticalStrut(10)); // Spacer between button and text field
+        inputPanel.add(Box.createVerticalStrut(10)); 
 
         addPanels(inputPanel);
         
         inputPanel.add(inputButton);
+        inputPanel.add(saveButton);
+        inputPanel.add(loadButton);
+
+
         return inputPanel;
     }
 
-    public JPanel createCoursePanel() {
-        JPanel coursePanel = new JPanel(new GridLayout(1, 7, 5, 5));
-        
-        // Initialize day panels for each day in coursePanel
-        for (String day : week) {
-            JPanel dayPanel = new JPanel();
-            dayPanel.setLayout(new BoxLayout(dayPanel, BoxLayout.Y_AXIS));
-            dayPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-            coursePanel.add(dayPanel);
-            dayPanels.put(day, dayPanel);
-        }
-        return coursePanel;
+    private JButton createButton(String type) {
+        JButton button = new JButton(type);
+        button.addActionListener(this);
+        button.setPreferredSize(new Dimension(100, 30));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        button.setActionCommand(type);
+        return button;
     }
 
     private void addPanels(JPanel inputPanel) {
@@ -145,6 +158,12 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Input")) {
             addCourse();
+            weekSchedule.fillWeek(courseList);
+            fillPanel();
+        } else if (e.getActionCommand().equals("SaveCourse")) {
+            saveCourse();
+        } else if (e.getActionCommand().equals("LoadCourse")) {
+            loadCourse();
             fillPanel();
         }
     }
@@ -166,28 +185,34 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
                                 timeMinutesOver, description, date, type, professor, courseTerm,
                                 credit, place);  
         courseList.addCase(course);
-        weekSchedule.fillWeek(courseList);
     }
 
     private void fillPanel() {
-        ArrayList<CaseToDo> courses = courseList.getList();
-        for (CaseToDo c : courses) {
+        ArrayList<CaseToDo>[] weekCourses = new ArrayList[]{
+            weekSchedule.getMon(),
+            weekSchedule.getTue(),
+            weekSchedule.getWed(),
+            weekSchedule.getThu(),
+            weekSchedule.getFri(),
+            weekSchedule.getSat(),
+            weekSchedule.getSun()
+        };
+        for (int i = 0; i < weekCourses.length; i++) {
+            ArrayList<CaseToDo> courses = weekCourses[i];
+            courses.sort(Comparator.comparingInt(CaseToDo::getTimeHoursBegin)
+                    .thenComparingInt(CaseToDo::getTimeMinutesBegin));
+            fillInCourse(i, courses);
+        }
+    }
+
+    private void fillInCourse(int numCol, ArrayList<CaseToDo> listCourses) {
+        int rows = 0;
+
+        for (CaseToDo c : listCourses) {
             Course course = (Course) c;
-            String date = course.getDate();
-            String courseInfo = printCourse(course);
-            // if (dayPanels.containsKey(date)) {
-            //     JLabel courseLabel = new JLabel(courseInfo);
-            //     courseLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            //     dayPanels.get(date).add(courseLabel);
-            //     infoPanel.revalidate();
-            //     infoPanel.repaint();
-            // }
-            JLabel courseLabel = new JLabel(courseInfo);
-            courseLabel.setHorizontalAlignment(SwingConstants.LEFT);
-            courseLabel.setBorder(new EmptyBorder(5, 0, 5, 0));
-            infoPanel.add(courseLabel);
-            infoPanel.revalidate();
-            infoPanel.repaint();
+            String info = printCourse(course);
+            courseTable.setValueAt(info, rows, numCol);
+            rows++;
         }
     }
 
@@ -243,6 +268,43 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
             return Integer.parseInt(txtEndMinute.getText());
         } else {
             return Integer.parseInt(txtCredit.getText());
+        }
+    }
+
+    private void saveCourse() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(weekSchedule);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file");
+        }
+
+    }
+
+    private void loadCourse() {
+        try {
+            weekSchedule = jsonReader.read();
+            fillLists();
+            System.out.println("Loaded event list from " + JSON_WEEKSCHEDULE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file");
+        }
+    }
+
+    private void fillLists() {
+        ArrayList<ArrayList<CaseToDo>> listWeek = new ArrayList<ArrayList<CaseToDo>>();
+        listWeek.add(weekSchedule.getMon() != null ? weekSchedule.getMon() : new ArrayList<>());
+        listWeek.add(weekSchedule.getTue() != null ? weekSchedule.getTue() : new ArrayList<>());
+        listWeek.add(weekSchedule.getWed() != null ? weekSchedule.getWed() : new ArrayList<>());
+        listWeek.add(weekSchedule.getThu() != null ? weekSchedule.getThu() : new ArrayList<>());
+        listWeek.add(weekSchedule.getFri() != null ? weekSchedule.getFri() : new ArrayList<>());
+        listWeek.add(weekSchedule.getSat() != null ? weekSchedule.getSat() : new ArrayList<>());
+        listWeek.add(weekSchedule.getSun() != null ? weekSchedule.getSun() : new ArrayList<>());
+        for (ArrayList<CaseToDo> loc : listWeek) {
+            for (CaseToDo c: loc) {
+                courseList.addCase(c);
+            }
         }
     }
 }
