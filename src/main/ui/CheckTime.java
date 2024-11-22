@@ -22,7 +22,7 @@ public class CheckTime {
 
     public CheckTime(ListOfCaseForWeek weekSchedule) {
         this.weekSchedule = weekSchedule;
-        this.currentTime = LocalTime.now();//from chatGPT
+        this.currentTime = LocalTime.now();
         this.minute = currentTime.getMinute();
         this.hour = currentTime.getHour();
         this.today = LocalDate.now();  

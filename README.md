@@ -28,3 +28,10 @@ I plan to design a plug-in software for ubc's workday website for personal time 
 - As a user, I want to save the list of event in this week
 - As a user, I want to save the list of course in this week
 - As a user, I want to save this week's schedule
+
+# Instructions for End User
+- input "GUI" in the terminal to access the graphical user interface
+- input basic information of the course you want to input into the input part, and then put the "AddCourse" button
+- click button that correspond to each of the term to show separate time tables for different terms
+- To save the input courses you can click "SaveCourse" button
+- To load the courses you can click "LoadCourse" button

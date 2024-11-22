@@ -3,6 +3,7 @@ package ui;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import model.ListOfCourses;
 import persistence.JsonReader;
@@ -16,14 +17,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-
+//class that runs GUI
 public class GraphicalUserInterface extends JFrame implements ActionListener {
     private ListOfCourses courseList;
     private ListOfCaseForWeek weekSchedule;
@@ -42,70 +40,82 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
     private JTable courseTable = new JTable();
     private JPanel infoPanel;
     private JPanel inputPanel;
-    private Map<String, JPanel> dayPanels;
     private static final String JSON_WEEKSCHEDULE = "./data/weekSchedule.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private ImageIcon term1;
+    private ImageIcon term2;
+    private ImageIcon summer;
+    private JLabel imageAsLabel;
+    private JPanel imagePanel;
 
-
-
-    private static final ArrayList<String> week = new ArrayList<>(
-            Arrays.asList("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"));
-
+    //EFFECTS: initialize panels in the user interface
     public GraphicalUserInterface() {
         super("Course Schedule");
 
         this.courseList = new ListOfCourses();
         this.weekSchedule = new ListOfCaseForWeek();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(1300, 500));
+        setPreferredSize(new Dimension(1300, 700));
         setLayout(new BorderLayout());
-        dayPanels = new HashMap<>();
-        // Panel for days of the week (left side)
         this.jsonWriter = new JsonWriter(JSON_WEEKSCHEDULE);
         this.jsonReader = new JsonReader(JSON_WEEKSCHEDULE);
 
         infoPanel = createInfoPanel();
 
-        // Panel for input section (right side)
         inputPanel = createInputPanel();
 
-        // Add schedule and input panels to the main layout
-        add(infoPanel, BorderLayout.WEST);  // Days of the week on the left
-        add(inputPanel, BorderLayout.EAST);       // Button and input fields on the right
+        add(infoPanel, BorderLayout.WEST);  
+        add(inputPanel, BorderLayout.EAST);     
 
         pack();
-        setLocationRelativeTo(null); // Center the window on the screen
+        setLocationRelativeTo(null);
         setVisible(true);
+        loadImages();
     }
 
+    //EFFECTS: create the panel that contains information displayed
     private JPanel createInfoPanel() {
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BorderLayout());
         infoPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        infoPanel.setPreferredSize(new Dimension(1000, 500));
-        String[] columnNames = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
-        Object[][] data = new Object[10][7];;
-        DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
+        infoPanel.setPreferredSize(new Dimension(1000, 700));
+        String[] dateTitle = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+        Object[][] tableCells = new Object[10][7];;
+        DefaultTableModel tableModel = new DefaultTableModel(tableCells, dateTitle);
         JTable table = new JTable(tableModel);
+        
         table.setRowHeight(50);
         for (int i = 0; i < table.getColumnCount(); i++) {
-            table.getColumnModel().getColumn(i).setCellRenderer(new MultiLineTableCellRenderer());
+            table.getColumnModel().getColumn(i).setCellRenderer(new ChangingTableLinesCellRenderer());
         }
         courseTable = table;
         JScrollPane scrollPane = new JScrollPane(table);
         infoPanel.add(scrollPane, BorderLayout.CENTER);
+
+        JPanel imagePanel = new JPanel();
+        imagePanel.setPreferredSize(new Dimension(1000, 50));
+        imagePanel.setLayout(new FlowLayout());
+        infoPanel.add(imagePanel, BorderLayout.NORTH);
+    
+        this.imagePanel = imagePanel;
+
         return infoPanel;
     }
 
+    //EFFECTS: create panel that display the input part of the user interface
     private JPanel createInputPanel() {
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
         inputPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        inputPanel.setPreferredSize(new Dimension(300, 500));
+        inputPanel.setPreferredSize(new Dimension(300, 700));
         JButton inputButton = createButton("Input");
         JButton saveButton = createButton("SaveCourse");
         JButton loadButton = createButton("LoadCourse");
+        JButton showTerm1Button = createButton("LoadCourse(Term1)");
+        JButton showTerm2Button = createButton("LoadCourse(Term2)");
+        JButton showSummerButton = createButton("LoadCourse(Summer)");
+
 
         inputPanel.add(Box.createVerticalStrut(10)); 
 
@@ -114,11 +124,16 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
         inputPanel.add(inputButton);
         inputPanel.add(saveButton);
         inputPanel.add(loadButton);
+        inputPanel.add(showTerm1Button);
+        inputPanel.add(showTerm2Button);
+        inputPanel.add(showSummerButton);
+
 
 
         return inputPanel;
     }
 
+    //EFFECTS: create Button that aligned center and with width 100 and height 30
     private JButton createButton(String type) {
         JButton button = new JButton(type);
         button.addActionListener(this);
@@ -128,6 +143,8 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
         return button;
     }
 
+    //MODIFIES: this
+    //EFFECTS: add input blank in to the input panel
     private void addPanels(JPanel inputPanel) {
         inputPanel.add(createPanel("Course Name: ",txtCourseName));
         inputPanel.add(createPanel("Date: ",txtDate));
@@ -144,9 +161,9 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
     }
 
     //MODIFIES: txtField
-    //EFFECTS: add the field in the GUI
+    //EFFECTS: create courseLabel being contained in the course Name Panel
     private JPanel createPanel(String name, JTextField txtField) {
-        JPanel courseNamePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));  // Left-align components in this row
+        JPanel courseNamePanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); 
         JLabel courseLabel = new JLabel(name);
         courseNamePanel.add(courseLabel);
         courseNamePanel.add(txtField);
@@ -155,19 +172,76 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
     }
 
     //This is the method that is called when the the JButton btn is clicked
+    // From 
+    //https://stackoverflow.com/questions/6578205/swing-jlabel-text-change-on-the-running-application
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Input")) {
             addCourse();
             weekSchedule.fillWeek(courseList);
-            fillPanel();
+            fillPanel("All");
+            imagePanel.removeAll();
         } else if (e.getActionCommand().equals("SaveCourse")) {
             saveCourse();
         } else if (e.getActionCommand().equals("LoadCourse")) {
+            clearTable();
             loadCourse();
-            fillPanel();
+            fillPanel("All");
+            imagePanel.removeAll();
+        } else if (e.getActionCommand().equals("LoadCourse(Term1)")) {
+            performAction("Term1");
+        } else if (e.getActionCommand().equals("LoadCourse(Term2)")) {
+            performAction("Term2");
+        } else if (e.getActionCommand().equals("LoadCourse(Summer)")) {
+            performAction("Summer");
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: perform command input
+    private void performAction(String term) {
+        clearTable();
+        loadCourse();
+        if (term.equals("Term1")) {
+            fillPanel("Term1");
+            setTerm1();
+        } else if (term.equals("Term2")) {
+            fillPanel("Term2");
+            setTerm2();
+        } else if (term.equals("Summer")) {
+            fillPanel("Summer");
+            setSummer();
+        }
+    }
+
+    // from https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.git
+    public void setTerm1() {
+        imagePanel.removeAll();
+        imageAsLabel = new JLabel(term1);
+        imagePanel.add(imageAsLabel);
+        imagePanel.revalidate(); 
+        imagePanel.repaint();
+    }
+
+    // from https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.git
+    public void setTerm2() {
+        imagePanel.removeAll();
+        imageAsLabel = new JLabel(term2);
+        imagePanel.add(imageAsLabel);
+        imagePanel.revalidate(); 
+        imagePanel.repaint();
+    }
+
+    // from https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.git
+    public void setSummer() {
+        imagePanel.removeAll();
+        imageAsLabel = new JLabel(summer);
+        imagePanel.add(imageAsLabel);
+        imagePanel.revalidate(); 
+        imagePanel.repaint();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: Extract the course information
     private void addCourse() {
         String name = getInfo(0); 
         int timeHoursBegin = getNum(0);
@@ -184,10 +258,53 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
         CaseToDo course = new Course(name, timeHoursBegin, timeMinutesBegin, timeHoursOver, 
                                 timeMinutesOver, description, date, type, professor, courseTerm,
                                 credit, place);  
-        courseList.addCase(course);
+        boolean canAdd = checkIfAbleToAdd(date, timeHoursBegin, timeMinutesBegin, 
+                timeHoursOver, timeMinutesOver, courseTerm);
+        if (canAdd) {
+            courseList.addCase(course);
+        }
     }
 
-    private void fillPanel() {
+    //EFFECTS: check whether courses have time conflicts in one day
+    private boolean checkIfAbleToAdd(String date, 
+            int hourBegin, int minuteBegin, int hourOver, int minuteOver, String courseTerm) {
+        boolean canAdd = true;
+        for (CaseToDo c : courseList.getList()) {
+            int timeHoursBeginCourseAdded = c.getTimeHoursBegin();
+            int timeMinutesBeginCourseAdded = c.getTimeMinutesBegin();
+            int timeHoursOverCourseAdded = c.getTimeHoursOver();
+            int timeMinutesOverCourseAdded = c.getTimeMinutesOver();
+            if (c.getDate().equals(date)) {
+                Course courseInList = (Course) c;
+                String term = courseInList.getTerm();
+                if (term.equals(courseTerm)) {
+                    canAdd = timeConflict(timeHoursBeginCourseAdded, timeMinutesBeginCourseAdded,
+                    timeHoursOverCourseAdded, timeMinutesOverCourseAdded,
+                    hourBegin, minuteBegin,
+                    hourOver, minuteOver);
+                    if (!canAdd) {
+                        return canAdd;
+                    }
+                }
+            }
+        }
+        return canAdd;
+    }
+
+    //EFFECTS: check whether two cases have time conflict with the given start and end time.
+    public boolean timeConflict(int hourBegin1, int minuteBegin1, int hourOver1, int minuteOver1,
+                                int hourBegin2, int minuteBegin2, int hourOver2, int minuteOver2) {
+        double beginTime1 = hourBegin1 + 0.01 * minuteBegin1;
+        double endTime1 = hourOver1 + 0.01 * minuteOver1;
+        double beginTime2 = hourBegin2 + 0.01 * minuteBegin2;
+        double endTime2 = hourOver2 + 0.01 * minuteOver2;
+        
+        return beginTime1 >= endTime2 || beginTime2 >= endTime1;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: fill the planel according to given term
+    private void fillPanel(String term) {
         ArrayList<CaseToDo>[] weekCourses = new ArrayList[]{
             weekSchedule.getMon(),
             weekSchedule.getTue(),
@@ -201,21 +318,36 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
             ArrayList<CaseToDo> courses = weekCourses[i];
             courses.sort(Comparator.comparingInt(CaseToDo::getTimeHoursBegin)
                     .thenComparingInt(CaseToDo::getTimeMinutesBegin));
-            fillInCourse(i, courses);
+            fillInCourse(i, courses, term);
         }
     }
 
-    private void fillInCourse(int numCol, ArrayList<CaseToDo> listCourses) {
+    //MODIFIES: this
+    //EFFECTS: fill the planel according to given term
+    private void fillInCourse(int numCol, ArrayList<CaseToDo> listCourses, String term) {
         int rows = 0;
 
-        for (CaseToDo c : listCourses) {
-            Course course = (Course) c;
-            String info = printCourse(course);
-            courseTable.setValueAt(info, rows, numCol);
-            rows++;
+        if (term.equals("All")) {
+            for (CaseToDo c : listCourses) {
+                Course course = (Course) c;
+                String info = printCourse(course);
+                courseTable.setValueAt(info, rows, numCol);
+                rows++;
+            }
+        } else {
+            for (CaseToDo c : listCourses) {
+                Course course = (Course) c;
+                String info = printCourse(course);
+                String courseTerm = course.getTerm();
+                if (courseTerm.equals(term)) {
+                    courseTable.setValueAt(info, rows, numCol);
+                }
+                rows++;
+            }
         }
     }
 
+    //EFFECTS: return the course's basic information
     private String printCourse(Course course) {
         String name = course.getName();
         int startHour = course.getTimeHoursBegin();
@@ -235,10 +367,11 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
             overMinute = "0" + overMinute;
         }
         return name + "\n" + " " + startHour + ":"
-            + beginMinute + " - " + endHour + overMinute + "\n"
+            + beginMinute + " - " + endHour + ":" + overMinute + "\n"
             + professor + " " + place + " " + type + " " + description;
     }
 
+    //EFFECTS: get text information from text field
     public String getInfo(int input) {
         if (input == 0) {
             return txtCourseName.getText();
@@ -257,6 +390,7 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
         }
     }
 
+    //EFFECTS: get numeric information from the text field
     public int getNum(int num) {
         if (num == 0) {
             return Integer.parseInt(txtBeginHour.getText());
@@ -271,6 +405,8 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: save the course into Json file
     private void saveCourse() {
         try {
             jsonWriter.open();
@@ -282,6 +418,8 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS load the courses from the Json file and fill them into the table
     private void loadCourse() {
         try {
             weekSchedule = jsonReader.read();
@@ -292,6 +430,10 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
         }
     }
 
+    //MODIFIES: this
+    /*EFFECTS: add cases from the week schedule in the course and event list
+     *          according to the actual type of case
+    */
     private void fillLists() {
         ArrayList<ArrayList<CaseToDo>> listWeek = new ArrayList<ArrayList<CaseToDo>>();
         listWeek.add(weekSchedule.getMon() != null ? weekSchedule.getMon() : new ArrayList<>());
@@ -306,5 +448,29 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
                 courseList.addCase(c);
             }
         }
+    }
+
+    //MODIFIES: this
+    //EFFECTS: clear all texts in the table cells
+    private void clearTable() {
+        TableModel model = courseTable.getModel();
+        int rows = model.getRowCount();
+        int cols = model.getColumnCount();
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                courseTable.setValueAt("", row, col); 
+            }
+        }
+    }
+
+    // from https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.git
+    private void loadImages() {
+        String sep = System.getProperty("file.separator");
+        term1 = new ImageIcon(System.getProperty("user.dir") + sep
+                + "images" + sep + "Term1.png");
+        term2 = new ImageIcon(System.getProperty("user.dir") + sep
+                + "images" + sep + "Term2.png");
+        summer = new ImageIcon(System.getProperty("user.dir") + sep
+                + "images" + sep + "Summer.png");
     }
 }
