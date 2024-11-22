@@ -33,5 +33,6 @@ I plan to design a plug-in software for ubc's workday website for personal time 
 - input "GUI" in the terminal to access the graphical user interface
 - input basic information of the course you want to input into the input part, and then put the "AddCourse" button
 - click button that correspond to each of the term to show separate time tables for different terms
+- You can find my visual component at the top of the panel, right above the time table
 - To save the input courses you can click "SaveCourse" button
 - To load the courses you can click "LoadCourse" button
