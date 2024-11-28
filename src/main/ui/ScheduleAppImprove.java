@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
+import exceptions.LogException;
 import exceptions.illegalInputException;
 
 //Schedule application
@@ -45,6 +48,15 @@ public class ScheduleAppImprove {
             displayManual();
             String respon = input.nextLine().toLowerCase();
             if (respon.equals("e")) {
+
+                LogPrinter lp;
+                try {
+                    lp = new ConsolePrinter();
+                    lp.printLog(EventLog.getInstance());
+                } catch (LogException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
                 break;
             } else {
                 displayFunctions(respon);
@@ -311,18 +323,20 @@ public class ScheduleAppImprove {
         while (keepMoodify) {
             System.out.println("which day would you modify?\nMon, Tue, Wed, Thu, Fri, Sat, Sun");
             String date = input.nextLine();
-            ArrayList<CaseToDo> dateListToModify = weekSchedule.getDateList(date);
+            // ArrayList<CaseToDo> dateListToModify = weekSchedule.getDateList(date);
             System.out.println("Which type of case would you prefer to modify?\ncourse\nevent\n");
             String caseType = input.nextLine();
             if (caseType.equals("course")) {
                 System.out.println("what's the course's name?\n");
                 String courseNameToChange = input.nextLine();
-                removeCourse(courseNameToChange, dateListToModify);
+                weekSchedule.removeCase(courseNameToChange, date);
+                courseList.removeCase(courseNameToChange, date);
+                // removeCourse(courseNameToChange, dateListToModify);
             } else if (caseType.equals("event")) {
                 System.out.println("What's the event's name?\n");
                 String eventNameToChange = input.nextLine();
                 weekSchedule.removeCase(eventNameToChange, date);
-                // removeEvent(eventNameToChange, dateListToModify);
+                eventList.removeCase(eventNameToChange, date);
             }
             System.out.println("Do you want to keep modify?");
             keepMoodify = Boolean.parseBoolean(input.nextLine());
@@ -403,6 +417,7 @@ public class ScheduleAppImprove {
         String professor = course.getProfessor();
         String type = course.getType();
         String place = course.getPlace();
+        String date = course.getDate();
         String description = course.getDescription();
         String beginMinute = String.valueOf(startMinute);
         String overMinute = String.valueOf(endMinute); 
@@ -414,7 +429,7 @@ public class ScheduleAppImprove {
         }
         return name + "\n" + " " + startHour + ":"
             + beginMinute + " - " + endHour + overMinute + "\n"
-            + professor + " " + place + " " + type + " " + description;
+            + professor + " " + place + " " + type + " " + description + " " + date;
     }
 
     //EFFECTS: print name, time and place and description for the event

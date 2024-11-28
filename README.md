@@ -36,3 +36,17 @@ I plan to design a plug-in software for ubc's workday website for personal time 
 - You can find my visual component at the top of the panel, right above the time table
 - To save the input courses you can click "SaveCourse" button
 - To load the courses you can click "LoadCourse" button
+
+# "Phase 4: Task 2
+- Thu Nov 28 14:39:58 PST 2024
+Add new case Office Hour into the caseList
+Thu Nov 28 14:40:16 PST 2024
+Add new case Test into the caseList
+Thu Nov 28 14:40:21 PST 2024
+add cases into the week's schedule
+Thu Nov 28 14:40:21 PST 2024
+add cases into the week's schedule
+Thu Nov 28 14:40:50 PST 2024
+remove one case Office Hour from Mon's  caseList
+Thu Nov 28 14:40:50 PST 2024
+remove one case Office Hour from the caseList

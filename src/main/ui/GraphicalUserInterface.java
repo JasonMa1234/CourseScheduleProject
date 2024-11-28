@@ -5,17 +5,23 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import exceptions.LogException;
 import model.ListOfCourses;
+import model.LogPrinter;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import model.Course;
+import model.EventLog;
+import model.ConsolePrinter;
 import model.ListOfCaseForWeek;
 import model.CaseToDo;
-
+import model.ConsolePrinter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.io.FileNotFoundException;
@@ -70,6 +76,24 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
 
         pack();
         setLocationRelativeTo(null);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                LogPrinter lp;
+                try {
+                    lp = new ConsolePrinter();
+                    lp.printLog(EventLog.getInstance());
+                } catch (LogException excep) {
+                    JOptionPane.showMessageDialog(null, excep.getMessage(), "System Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                // System.out.println("Closing application...");
+                System.exit(0); // Close the application
+            }
+        });        
+
+
         setVisible(true);
         loadImages();
     }

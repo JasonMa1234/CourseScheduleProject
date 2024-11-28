@@ -150,6 +150,7 @@ public class ListOfCaseForWeek implements Writable {
                 planSun(x);
             }
         }
+        EventLog.getInstance().logEvent(new Event("add cases into the week's schedule"));
     }
 
     //REQUIRES: date must be one of "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
@@ -223,6 +224,7 @@ public class ListOfCaseForWeek implements Writable {
         return jsonArraySecond;
     }
 
+    //EFFECTS: remove a case from week's schedule
     public void removeCase(String caseToChange, String date) {
         ArrayList<CaseToDo> caseList = getDateList(date);
         CaseToDo caseToRemove = null;
@@ -231,6 +233,9 @@ public class ListOfCaseForWeek implements Writable {
                 caseToRemove = c;
             }
         }
+        String name = caseToRemove.getName();
         caseList.remove(caseToRemove);    
+        EventLog.getInstance().logEvent(new Event("remove one case " + name + " from "
+                + date + "'s " + " caseList"));
     }
 }
