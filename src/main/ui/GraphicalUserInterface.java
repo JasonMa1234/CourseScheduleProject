@@ -200,7 +200,7 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
     //EFFECTS: perform command input
     private void performAction(String term) {
         clearTable();
-        loadCourse();
+        // loadCourse();
         if (term.equals("Term1")) {
             fillPanel("Term1");
             setTerm1();

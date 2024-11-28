@@ -10,13 +10,13 @@ import org.junit.jupiter.api.Test;
 public class TestListOfEvents {
     private ListOfEvents eventList1;
     private ListOfEvents eventList2;
-    private Event officeHour;
-    private Event clubActivity;
+    private EventHappen officeHour;
+    private EventHappen clubActivity;
 
 
     @BeforeEach
     void runBefore() {
-        officeHour = new Event("officehour1",
+        officeHour = new EventHappen("officehour1",
                             13,
                             0,
                             15,
@@ -24,7 +24,7 @@ public class TestListOfEvents {
                             "OfficeHoure",
                             "Mon",
                             "ESB1024");
-        clubActivity =  new Event("officehour2",
+        clubActivity =  new EventHappen("officehour2",
                         10,
                         0,
                         11,

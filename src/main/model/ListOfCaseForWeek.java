@@ -222,4 +222,15 @@ public class ListOfCaseForWeek implements Writable {
         }
         return jsonArraySecond;
     }
+
+    public void removeCase(String caseToChange, String date) {
+        ArrayList<CaseToDo> caseList = getDateList(date);
+        CaseToDo caseToRemove = null;
+        for (CaseToDo c: caseList) {
+            if (c.getName().equals(caseToChange)) {
+                caseToRemove = c;
+            }
+        }
+        caseList.remove(caseToRemove);    
+    }
 }

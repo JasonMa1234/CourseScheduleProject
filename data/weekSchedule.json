@@ -34,6 +34,21 @@
             "end minute": 0,
             "date": "Mon",
             "is Event": false,
+            "description": "None",
+            "type": "Lecture",
+            "professor": "ABC",
+            "start minute": 0,
+            "end hour": 12,
+            "name": "CPSC221",
+            "term": "Term2",
+            "place": "A",
+            "start hour": 11,
+            "credit": 3
+        },
+        {
+            "end minute": 0,
+            "date": "Mon",
+            "is Event": false,
             "description": "",
             "type": "Lecture",
             "professor": "A",
@@ -168,6 +183,21 @@
             "name": "MATH221",
             "term": "Term1",
             "place": "WESB",
+            "start hour": 11,
+            "credit": 3
+        },
+        {
+            "end minute": 30,
+            "date": "Thu",
+            "is Event": false,
+            "description": "",
+            "type": "Lecture",
+            "professor": "ABD",
+            "start minute": 0,
+            "end hour": 12,
+            "name": "Math300",
+            "term": "Term2",
+            "place": "ABCD",
             "start hour": 11,
             "credit": 3
         }

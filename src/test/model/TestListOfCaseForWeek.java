@@ -19,7 +19,7 @@ public class TestListOfCaseForWeek {
     @BeforeEach
     void runBefore() {
         weekSchedule = new ListOfCaseForWeek();
-        event1 = new Event("officehour1",
+        event1 = new EventHappen("officehour1",
                             13,
                             0,
                             15,
@@ -27,7 +27,7 @@ public class TestListOfCaseForWeek {
                             "OfficeHoure",
                             "Mon",
                             "ESB1024");
-        event2 = new Event("officehour2",
+        event2 = new EventHappen("officehour2",
                             10,
                             0,
                             11,

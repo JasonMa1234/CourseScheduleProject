@@ -21,4 +21,6 @@ public class ListOfCase {
     public ArrayList<CaseToDo> getList() {
         return caseList;
     }
+
+
 }

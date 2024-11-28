@@ -39,8 +39,8 @@ public class ListOfEvents extends ListOfCase {
             return count;
         }
         for (CaseToDo e : caseList) {
-            if (e instanceof Event) {
-                Event event = (Event) e;  // From chatGPT
+            if (e instanceof EventHappen) {
+                EventHappen event = (EventHappen) e;  // From chatGPT
                 if (event.getImportance()) {
                     count++;
                 }    

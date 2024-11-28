@@ -88,7 +88,7 @@ public class ScheduleAppImprove {
      * to the actual type
     */
     private void fillCaseList(CaseToDo caseToDo) {
-        if (caseToDo instanceof Event) {
+        if (caseToDo instanceof EventHappen) {
             eventList.addCase(caseToDo);
         } else {
             courseList.addCase(caseToDo);
@@ -105,7 +105,7 @@ public class ScheduleAppImprove {
         } else if (respon.equals("d")) {
             dailyArrange();
         } else if (respon.equals("m")) {
-            manipulateCase();
+            removeCase();
         } else if (respon.equals("v")) {
             lookDetail();
         } else if (respon.equals("c")) {
@@ -228,7 +228,7 @@ public class ScheduleAppImprove {
         String date = getOneFromList("What is the date? (Mon, Tue, Wed, Thu, Fri, Sat, Sun)", week);
         String place = getInfo("What's the place");
         String description = getInfo("Further description?");
-        CaseToDo event = new Event(name, timeHoursBegin, timeMinutesBegin, timeHoursOver, 
+        CaseToDo event = new EventHappen(name, timeHoursBegin, timeMinutesBegin, timeHoursOver, 
                                 timeMinutesOver, description, date,place);
         System.out.println("Finish creating event " + name + " exit by typing 'e' keep adding by click enter");
         return event;
@@ -306,7 +306,7 @@ public class ScheduleAppImprove {
 
     //MODIFIES: this
     //EFFECTS: add or remove an event or course in the schedule
-    private void manipulateCase() {
+    private void removeCase() {
         boolean keepMoodify = true;
         while (keepMoodify) {
             System.out.println("which day would you modify?\nMon, Tue, Wed, Thu, Fri, Sat, Sun");
@@ -317,11 +317,12 @@ public class ScheduleAppImprove {
             if (caseType.equals("course")) {
                 System.out.println("what's the course's name?\n");
                 String courseNameToChange = input.nextLine();
-                modifyCourse(courseNameToChange, dateListToModify);
+                removeCourse(courseNameToChange, dateListToModify);
             } else if (caseType.equals("event")) {
                 System.out.println("What's the event's name?\n");
                 String eventNameToChange = input.nextLine();
-                modifyEvent(eventNameToChange, dateListToModify);
+                weekSchedule.removeCase(eventNameToChange, date);
+                // removeEvent(eventNameToChange, dateListToModify);
             }
             System.out.println("Do you want to keep modify?");
             keepMoodify = Boolean.parseBoolean(input.nextLine());
@@ -330,7 +331,7 @@ public class ScheduleAppImprove {
 
     //MODIFIES: this
     //EFFECTS: remove a course
-    private void modifyCourse(String courseToChange, ArrayList<CaseToDo> dateListToModify) {
+    private void removeCourse(String courseToChange, ArrayList<CaseToDo> dateListToModify) {
         CaseToDo caseToRemove = null;
         for (CaseToDo c: dateListToModify) {
             if (c.getName().equals(courseToChange)) {
@@ -344,7 +345,7 @@ public class ScheduleAppImprove {
 
     //MODIFIES: this
     //EFFECTS: remove an event
-    private void modifyEvent(String eventToChange, ArrayList<CaseToDo> dateListToModify) {
+    private void removeEvent(String eventToChange, ArrayList<CaseToDo> dateListToModify) {
         CaseToDo caseToRemove = null;
         for (CaseToDo c: dateListToModify) {
             if (c.getName().equals(eventToChange)) {
@@ -385,7 +386,7 @@ public class ScheduleAppImprove {
         System.out.println("What is the event?");
         String eventName = input.nextLine();
         for (CaseToDo c : eventList.getList()) {
-            Event element = (Event) c;
+            EventHappen element = (EventHappen) c;
             if (element.getName().equals(eventName)) {
                 printEvent(element);
             }
@@ -417,7 +418,7 @@ public class ScheduleAppImprove {
     }
 
     //EFFECTS: print name, time and place and description for the event
-    private void printEvent(Event event) {
+    private void printEvent(EventHappen event) {
         String name = event.getName();
         int startHour = event.getTimeHoursBegin();
         int startMinute = event.getTimeMinutesBegin();

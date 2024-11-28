@@ -8,12 +8,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TestEvent {
-    private Event officeHour;
+    private EventHappen officeHour;
 
     @BeforeEach
     void runBefore() {
 
-        officeHour = new Event("officehour",
+        officeHour = new EventHappen("officehour",
                         14,
                         0,
                         15,

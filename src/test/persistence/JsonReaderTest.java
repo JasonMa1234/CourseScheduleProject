@@ -54,9 +54,9 @@ public class JsonReaderTest extends JsonTest {
             CaseToDo courseFormCase = scheduleMon.get(0);
             Course course = (Course) courseFormCase;
             CaseToDo eventFormCase1 = scheduleTue.get(0);
-            Event event1 = (Event) eventFormCase1;
+            EventHappen event1 = (EventHappen) eventFormCase1;
             CaseToDo eventFormCase2 = scheduleTue.get(1);
-            Event event2 = (Event) eventFormCase2;
+            EventHappen event2 = (EventHappen) eventFormCase2;
             assertEquals(1,scheduleMon.size());
             assertEquals(2, scheduleTue.size());
             assertEquals(0, scheduleWed.size());

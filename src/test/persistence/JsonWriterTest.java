@@ -14,8 +14,8 @@ public class JsonWriterTest extends JsonTest {
     private ListOfCase caseList = new ListOfCase();
     private Course stat;
     private Course math;
-    private Event officeHour;
-    private Event clubActivity;
+    private EventHappen officeHour;
+    private EventHappen clubActivity;
     
     @BeforeEach
     void setupCaseList() {
@@ -43,7 +43,7 @@ public class JsonWriterTest extends JsonTest {
                         "Winter1",
                         3,
                         "WESB101");
-        officeHour = new Event("officehour1",
+        officeHour = new EventHappen("officehour1",
                         13,
                         0,
                         15,
@@ -51,7 +51,7 @@ public class JsonWriterTest extends JsonTest {
                         "OfficeHoure",
                         "Mon",
                         "ESB1024");
-        clubActivity =  new Event("officehour2",
+        clubActivity =  new EventHappen("officehour2",
                         10,
                         0,
                         11,
@@ -122,9 +122,9 @@ public class JsonWriterTest extends JsonTest {
             CaseToDo courseFormCase1 = scheduleMon.get(0);
             Course course1 = (Course) courseFormCase1;
             CaseToDo eventFormCase1 = scheduleMon.get(1);
-            Event event1 = (Event) eventFormCase1;
+            EventHappen event1 = (EventHappen) eventFormCase1;
             CaseToDo eventFormCase2 = scheduleTue.get(1);
-            Event event2 = (Event) eventFormCase2;
+            EventHappen event2 = (EventHappen) eventFormCase2;
             assertEquals(2,scheduleMon.size());
             assertEquals(2, scheduleTue.size());
             assertEquals(0, scheduleWed.size());

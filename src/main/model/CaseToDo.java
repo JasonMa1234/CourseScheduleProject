@@ -145,4 +145,6 @@ public abstract class CaseToDo implements Writable {
         json.put("place", place);
         return json;
     }
+
+    
 }

@@ -3,7 +3,7 @@ package persistence;
 import model.CaseToDo;
 import model.ListOfCaseForWeek;
 import java.util.ArrayList;
-import model.Event;
+import model.EventHappen;
 import model.Course;
 
 
@@ -124,8 +124,8 @@ public class JsonReader {
     private void addEvent(String name, int startHour, int startMinute, int overHour, int overMinute, String date,
                          String description,String place, ArrayList<CaseToDo> caseList, JSONObject jsonObject) {
         boolean importance = Boolean.valueOf(jsonObject.getBoolean("importance"));
-        CaseToDo event = new Event(name, startHour, startMinute, overMinute, overHour, description, date, place);
-        Event eventE = (Event) event;
+        CaseToDo event = new EventHappen(name, startHour, startMinute, overMinute, overHour, description, date, place);
+        EventHappen eventE = (EventHappen) event;
         eventE.setImportance(importance);
         caseList.add(eventE);
     }
