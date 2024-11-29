@@ -6,11 +6,11 @@ package exceptions;
  * printing the event log.
  */
 public class LogException extends Exception {
-	public LogException() {
-		super("Error printing log");
-	}
-	
-	public LogException(String msg) {
-		super(msg);
-	}
+    public LogException() {
+        super("Error printing log");
+    }
+
+    public LogException(String msg) {
+        super(msg);
+    }
 }

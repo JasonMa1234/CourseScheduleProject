@@ -1,5 +1,5 @@
 package exceptions;
 
-public class numOutRangeException extends illegalInputException{
+public class NumOutRangeException extends IllegalInputException{
 
 }

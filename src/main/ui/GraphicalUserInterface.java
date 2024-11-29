@@ -15,7 +15,6 @@ import model.EventLog;
 import model.ConsolePrinter;
 import model.ListOfCaseForWeek;
 import model.CaseToDo;
-import model.ConsolePrinter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -76,8 +75,13 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
 
         pack();
         setLocationRelativeTo(null);
+        addExitListener();
+        setVisible(true);
+        loadImages();
+    }
 
-        addWindowListener(new WindowAdapter() {
+    public void addExitListener() {
+        this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 LogPrinter lp;
@@ -88,14 +92,9 @@ public class GraphicalUserInterface extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, excep.getMessage(), "System Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
-                // System.out.println("Closing application...");
-                System.exit(0); // Close the application
+                System.exit(0);
             }
-        });        
-
-
-        setVisible(true);
-        loadImages();
+        }); 
     }
 
     //EFFECTS: create the panel that contains information displayed

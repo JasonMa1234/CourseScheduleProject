@@ -1,6 +1,6 @@
 package model;
 
-public class ConsolePrinter implements LogPrinter{
+public class ConsolePrinter implements LogPrinter {
 
     public ConsolePrinter() {
         
@@ -8,9 +8,9 @@ public class ConsolePrinter implements LogPrinter{
 
     @Override
 	public void printLog(EventLog el) {
-		for (Event next : el) {
+        for (Event next : el) {
             System.out.println(next.toString());
         }
 
-	}
+    }
 }

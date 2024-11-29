@@ -37,7 +37,7 @@ I plan to design a plug-in software for ubc's workday website for personal time 
 - To save the input courses you can click "SaveCourse" button
 - To load the courses you can click "LoadCourse" button
 
-# "Phase 4: Task 2
+# Phase 4: Task 2
 - Thu Nov 28 14:39:58 PST 2024
 Add new case Office Hour into the caseList
 Thu Nov 28 14:40:16 PST 2024
@@ -50,3 +50,8 @@ Thu Nov 28 14:40:50 PST 2024
 remove one case Office Hour from Mon's  caseList
 Thu Nov 28 14:40:50 PST 2024
 remove one case Office Hour from the caseList
+
+# Phase 4: Task 3
+- In my project, there are many problems about the code structure which will affect the readability.
+First, there is too many redundant class in my code, in ListOfCase class, it basically represent a list of cases (courses and events), which can be represented by ArrayList, but I separately create classes to represent this because I want to make by code able to calculate the total credit for all courses. In the future, I may create a new method separately in ui package to calculate the total credit instead of creating new class.
+- Second, the input type in my classes in ui packages is messy. In my design, all elements are of type "course" or "event" and there is no other types. However, I store them in the type of CaseToDo which is the super type of the Course and Event which makes it hard to design distinct method on "Course" and "Event". In the future, I will try to store them as separate types.

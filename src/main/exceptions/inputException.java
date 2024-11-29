@@ -1,5 +1,5 @@
 package exceptions;
 
-public class inputException extends Exception{
+public class InputException extends Exception{
 
 }

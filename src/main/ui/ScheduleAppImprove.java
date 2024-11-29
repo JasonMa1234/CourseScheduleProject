@@ -13,7 +13,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import exceptions.LogException;
-import exceptions.illegalInputException;
+import exceptions.IllegalInputException;
 
 //Schedule application
 public class ScheduleAppImprove {
@@ -153,7 +153,7 @@ public class ScheduleAppImprove {
                         break;
                         case "e": break;
                     }
-                } catch (illegalInputException e) {
+                } catch (IllegalInputException e) {
                     invalidInput = true;
                 } 
             } while (invalidInput);
@@ -168,13 +168,13 @@ public class ScheduleAppImprove {
 
     //MODIFIES: this
     //EFFECTS: let users choose which type of case they are adding, course or event
-    private String checkTypeCase() throws illegalInputException {
+    private String checkTypeCase() throws IllegalInputException {
         System.out.println("Which type of case would you prefer to take?\ncourse\nevent\n");
         String caseType = input.nextLine().toLowerCase();
         if (caseType.equals("course") || caseType.equals("event") || caseType.equals("e")) {
             return caseType;
         } else {
-            throw new illegalInputException();
+            throw new IllegalInputException();
         }
     }
 
